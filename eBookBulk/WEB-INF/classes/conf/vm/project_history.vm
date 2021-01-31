@@ -1,0 +1,32 @@
+<html>
+ 
+<p> Hi, </p>
+ 
+ <br>
+
+		<table border="1" style="border: 1px solid #000000; border: 1px solid #000000;border-collapse: collapse;">
+			<tr>
+				<th>Field Name</th>
+				<th>Previous Value</th>
+				<th>Current Value</th>
+			</tr>
+    		#foreach ($projectHistoryContent in $projectHistoryList)
+				#set( $Integer = 0 )
+    			#set($prevStatusValue=$isbnRelatedContent.prevStatus)
+    			#set( $projectHistoryContent.fieldName = $projectHistoryContent.fieldName.replace('_', ' '))
+			 	
+    			<tr>
+					<td>$projectHistoryContent.fieldName</td>
+					<td>$projectHistoryContent.prevValue</td>
+					<td>$projectHistoryContent.currValue</td>
+				</tr>
+    		#end
+		</table>
+<br>
+<br> 
+<p>
+Thanks<br>
+MPS Technologies
+</p>
+</body>
+</html>  

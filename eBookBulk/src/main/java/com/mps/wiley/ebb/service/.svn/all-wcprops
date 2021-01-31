@@ -1,0 +1,191 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/projects/!svn/ver/73847/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service
+END
+RegistrationDetailsService.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/projects/!svn/ver/73098/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/RegistrationDetailsService.java
+END
+CustomerServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/projects/!svn/ver/73260/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/CustomerServiceImpl.java
+END
+MenuItemService.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/projects/!svn/ver/71481/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/MenuItemService.java
+END
+RoleServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/projects/!svn/ver/71481/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/RoleServiceImpl.java
+END
+PromoCodeService.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/projects/!svn/ver/73305/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/PromoCodeService.java
+END
+DynamicFieldService.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/projects/!svn/ver/73839/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/DynamicFieldService.java
+END
+ProjectUrlService.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/projects/!svn/ver/73251/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/ProjectUrlService.java
+END
+ProjectFieldServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/projects/!svn/ver/73379/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/ProjectFieldServiceImpl.java
+END
+TemplateServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/projects/!svn/ver/73842/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/TemplateServiceImpl.java
+END
+UserServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/projects/!svn/ver/73348/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/UserServiceImpl.java
+END
+CustomerService.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/projects/!svn/ver/72379/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/CustomerService.java
+END
+RoleService.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/projects/!svn/ver/71481/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/RoleService.java
+END
+AutoCompleterServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/projects/!svn/ver/72429/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/AutoCompleterServiceImpl.java
+END
+PasswordGeneratorService.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/projects/!svn/ver/73088/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/PasswordGeneratorService.java
+END
+ProjectFieldService.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/projects/!svn/ver/73378/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/ProjectFieldService.java
+END
+TemplateService.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/projects/!svn/ver/73841/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/TemplateService.java
+END
+UserService.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/projects/!svn/ver/73348/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/UserService.java
+END
+AutoCompleterService.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/projects/!svn/ver/72428/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/AutoCompleterService.java
+END
+KeyContactServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/projects/!svn/ver/72903/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/KeyContactServiceImpl.java
+END
+ProjectServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/projects/!svn/ver/73847/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/ProjectServiceImpl.java
+END
+ContentFileServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/projects/!svn/ver/73847/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/ContentFileServiceImpl.java
+END
+ReportServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/projects/!svn/ver/73795/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/ReportServiceImpl.java
+END
+RegistrationDetailsServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/projects/!svn/ver/73107/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/RegistrationDetailsServiceImpl.java
+END
+KeyContactService.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/projects/!svn/ver/72903/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/KeyContactService.java
+END
+MenuItemServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/projects/!svn/ver/71481/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/MenuItemServiceImpl.java
+END
+ProjectService.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/projects/!svn/ver/73749/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/ProjectService.java
+END
+PromoCodeServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/projects/!svn/ver/73306/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/PromoCodeServiceImpl.java
+END
+DynamicFieldServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/projects/!svn/ver/73840/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/DynamicFieldServiceImpl.java
+END
+ContentFileService.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/projects/!svn/ver/72094/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/ContentFileService.java
+END
+ReportService.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/projects/!svn/ver/73795/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/ReportService.java
+END
+ProjectUrlServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/projects/!svn/ver/73304/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/service/ProjectUrlServiceImpl.java
+END

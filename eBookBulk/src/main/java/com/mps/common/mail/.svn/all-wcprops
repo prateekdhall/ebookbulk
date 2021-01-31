@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/projects/!svn/ver/72828/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common/mail
+END
+MailConstants.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/projects/!svn/ver/71481/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common/mail/MailConstants.java
+END
+MailSender.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/projects/!svn/ver/72927/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common/mail/MailSender.java
+END
+MailObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/projects/!svn/ver/72827/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common/mail/MailObject.java
+END
+MailServer.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/projects/!svn/ver/71481/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common/mail/MailServer.java
+END

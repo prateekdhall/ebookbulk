@@ -1,0 +1,700 @@
+<%@page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="sj" uri="/struts-jquery-tags"%>
+<%@page import="java.util.List,java.util.ArrayList"%>
+
+<%@page
+	import="main.java.com.mps.wiley.ebb.domain.ProjectField,main.java.com.mps.wiley.util.StringUtility,main.java.com.mps.wiley.common.DynamicFieldConstants,main.java.com.mps.wiley.ebb.domain.DynamicField,main.java.com.mps.common.AppSystem;"%>
+<%@taglib uri="/struts-tags" prefix="s"%>
+<script type="text/javascript">
+	function checkAllCheckbox(tableID, promoCodeID) {
+		try {
+			var table = document.getElementById(tableID);
+			var rowCount = table.rows.length;
+			for ( var i = 1; i < rowCount; i++) {
+				var row = table.rows[i];
+				var chk = "checked" + i;
+				if(i!=promoCodeID)
+				{
+					
+					if(document.getElementById(chk).disabled == false)
+				{
+					if (document.getElementById('checked').checked == true) {
+					document.getElementById(chk).checked = true;
+					} 
+					else 
+					{
+						document.getElementById(chk).checked = false;
+					}
+				}
+				}
+				
+			}
+		} catch (e) {
+			alert(e);
+		}
+	}
+
+	function getFielddata(tableID) {
+		try {
+			var table = document.getElementById(tableID);
+			var checkedArray = new Array();
+			var fieldIdArray = new Array();
+			var fieldNameArray = new Array();
+			var fieldTypeArray = new Array();
+			var fieldMandatoryArray = new Array();
+			var fieldOrderArray = new Array();
+			var fieldLabelArray = new Array();
+			
+
+			var rowCount = table.rows.length;
+			for ( var i = 1; i < rowCount; i++) {
+				var row = table.rows[i];
+				var chkbox = row.cells[0].childNodes[0];
+				var chk = "checked" + i;
+				if (document.getElementById(chk).checked == true) {
+
+					var checked = "checked" + i;
+					var fieldId = "fieldId" + i;
+					var fieldName = "fieldName" + i;
+					var fieldLabel = "fieldLabel" + i;
+					var fieldType = "fieldType" + i;
+					var mandatory = "fieldMandatory" + i;
+					var fieldOrder = "fieldOrder" + i;
+
+					var checkeds = document.getElementById(checked);
+					var fieldIds = document.getElementById(fieldId);
+					var fieldNames = document.getElementById(fieldName);
+					var fieldLabels = document.getElementById(fieldLabel);
+					var fieldTypes = document.getElementById(fieldType);
+					var mandatorys = document.getElementById(mandatory);
+					var fieldOrder = document.getElementById(fieldOrder);
+
+					if (document.getElementById(mandatory).checked == true) {
+						mandatorys = document.getElementById(mandatory).value = true;
+						fieldMandatoryArray.push(mandatorys);
+					} else if (document.getElementById(mandatory).checked == false) {
+						mandatorys = document.getElementById(mandatory).value = false;
+						fieldMandatoryArray.push(mandatorys);
+					}
+
+					checkedArray.push(checkeds.value);
+					fieldIdArray.push(fieldIds.value);
+					fieldNameArray.push(fieldNames.value);
+					fieldLabelArray.push(fieldLabels.value);
+					fieldTypeArray.push(fieldTypes.value);
+					fieldOrderArray.push(fieldOrder.value);
+
+				}
+
+			}
+			if(checkedArray.length==0){
+				alert("Please check the fields ");
+			}else{
+				/* alert(checkedArray + "  " + fieldIdArray + "  " + fieldNameArray
+						+ "  " + fieldTypeArray + "   " + fieldMandatoryArray
+						+ "   " + fieldOrderArray+ "   " + fieldLabelArray); */
+						
+				var templateId = document.getElementById('templateId').value;
+				var pageId = document.getElementById('pageId').value;
+				
+				var countrySelected = document.getElementById('countrySelected').value;
+				var hearus = document.getElementById('hearus').value;
+				var footNote = document.getElementById('footNote').value;
+				
+				/* alert( "ebbs/dynamicFieldsAction.do?fieldId=" + fieldIdArray
+						+ "&fieldName=" + fieldNameArray + "&fieldType="
+						+ fieldTypeArray + "&fieldMandatory=" + fieldMandatoryArray
+						+ "&fieldOrder=" + fieldOrderArray+ "&fieldLabel=" + fieldLabelArray+"&templateId="+templateId+"&pageId="+pageId+"&countrySelected="+countrySelected+"&hearus="+hearus+"&footNote="+footNote); */
+				
+				
+			window.location = "ebbs/dynamicFieldsAction.do?fieldId=" + fieldIdArray
+					+ "&fieldName=" + fieldNameArray + "&fieldType="
+					+ fieldTypeArray + "&fieldMandatory=" + fieldMandatoryArray
+					+ "&fieldOrder=" + fieldOrderArray+ "&fieldLabel=" + fieldLabelArray+"&templateId="+templateId+"&pageId="+pageId+"&countrySelected="+countrySelected+"&hearus="+hearus+"&footNote="+footNote;
+			
+			//parent.refreshPage();
+			
+			
+			
+			}
+		} catch (e) {
+			alert(e);
+		}
+	}
+</script>
+<div class="medium-spacer"></div>
+<s:div>
+	<%
+String disabled="";
+int onceActiveFlag=0;
+if(request.getAttribute("onceActiveFlag")==null)
+{
+	onceActiveFlag=0;
+}
+else
+{
+	onceActiveFlag=(Integer)request.getAttribute("onceActiveFlag");
+}
+if(onceActiveFlag==1)
+{
+disabled="disabled";
+}
+else
+{
+	disabled="";
+}
+System.out.println("disabled==u===="+disabled);
+String[] countryList = StringUtility.countryList;
+String[] countryKey = StringUtility.countryKey;
+String[] hearUSList = StringUtility.hearUSList;
+String[] hearUSKey = StringUtility.hearUSKey;
+
+String pageCheck=(String)request.getAttribute("pageCheck");
+if(pageCheck==null)pageCheck="";
+
+String htmlContent=(String)request.getAttribute("htmlContent");
+if(htmlContent==null)htmlContent="";
+
+String successMessage=(String)request.getAttribute("successMessage");
+if(successMessage==null)successMessage="";
+
+List <String> projectFieldListDB=(List<String>)request.getAttribute("projectFieldListDB");
+if(projectFieldListDB==null) projectFieldListDB=new ArrayList();
+
+List <ProjectField> projectFieldList=(List)request.getAttribute("projectFieldList");
+%>
+	<s:form action="#" theme="xhtml">
+		<%
+if(projectFieldList!=null)
+{
+%>
+		<table cellpadding="0" cellspacing="0" id="dataTable" border="1"
+			class="dataTable">
+
+			<colgroup>
+				<col span="7" />
+				<col />
+			</colgroup>
+			<tr style="font-size: 12px">
+				<th width="20"><input type="checkbox" name="checked"
+					id="checked"
+					onclick="checkAllCheckbox('dataTable',<%=DynamicFieldConstants.PROMOCODE%>)"></th>
+				<th>Serial ID</th>
+				<th>Field Name</th>
+				<th>Field Type</th>
+				<th>Field Label</th>
+				<th>Mandatory</th>
+				<th>Order</th>
+				<th>Value</th>
+				<th>Field Footnote</th>
+			</tr>
+			<%  
+			String promoConfigExist =(String)request.getAttribute("promoConfigExist");
+			String fieldIdArr="", fieldNameArr="", fieldTypeArr="";
+			List<DynamicField> DYNAMIC_FIELDS=AppSystem.DYNAMIC_FIELDS;
+			if(DYNAMIC_FIELDS!=null && DYNAMIC_FIELDS.size()>0)
+			{
+				for(DynamicField dfList : DYNAMIC_FIELDS)
+				{
+					fieldIdArr=fieldIdArr+String.valueOf(dfList.getFieldId())+",";
+					fieldNameArr=fieldNameArr+dfList.getFieldName()+",";
+					fieldTypeArr=fieldTypeArr+dfList.getFieldType()+",";
+				}
+			}
+			fieldIdArr=fieldIdArr.substring(0,fieldIdArr.length()-1);
+			fieldIdArr="\"\","+fieldIdArr;
+			fieldNameArr=fieldNameArr.substring(0,fieldNameArr.length()-1);
+			fieldNameArr="\"\","+fieldNameArr;
+			fieldTypeArr=fieldTypeArr.substring(0,fieldTypeArr.length()-1);
+			fieldTypeArr="\"\","+fieldTypeArr;
+		
+			
+		    String[] fieldId=fieldIdArr.split(",");
+            String[] fieldName=fieldNameArr.split(","); 
+            String[] fieldType=fieldTypeArr.split(","); 
+           
+           ArrayList arr=new ArrayList();
+             if(projectFieldList!=null)
+             {
+            	 for(ProjectField objfield : projectFieldList)
+         		 {
+            		 arr.add(objfield.getFldId());
+         		 }	 
+             }
+             
+             boolean b=false;
+             
+          
+           for(int i=1;i<fieldName.length;i++)
+           { 
+         	  b=false;
+         	 if(projectFieldList!=null)
+         	  if(projectFieldList.size()==0)
+         	  {%>
+			<tr>
+				<td style="text-align: center;" align="justify">
+					<!-- <input type="checkbox" name="checked<%=i %>" id="checked<%=i %>"> -->
+					<%if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.PROMOCODE)))
+				{
+				System.out.println("fieldName[i]===="+fieldId[i]+"==="+i);%> <s:a
+						action="displayPromocode.do" id="promocode1" escapeAmp="false">
+						<s:param name="codeConfig.projectId" value="template.projectId" />
+						<s:param name="codeValue.count" value="0" />
+						<input type="checkbox" name="checked<%=i %>" id="checked<%=i %>">
+					</s:a> <%}
+				else 
+				{
+				%> <input type="checkbox" name="checked<%=i %>" id="checked<%=i %>">
+					<%} 
+			   %>
+
+
+
+				</td>
+				<td width="20" align="justify"><input type="text"
+					name="fieldId<%=i %>" id="fieldId<%=i %>" value="<%=i %>"
+					readonly="readonly"></td>
+				<td><input type="text" name="fieldLabel<%=i %>"
+					id="fieldLabel<%=i %>" value="<%=fieldName[i] %>"
+					readonly="readonly"></td>
+				<td><input type="text" name="fieldType<%=i %>"
+					id="fieldType<%=i %>" value="<%=fieldType[i] %>"
+					readonly="readonly"></td>
+
+				<td><input type="text" name="fieldName<%=i %>"
+					id="fieldName<%=i %>" value="<%=fieldName[i] %>"> <s:set
+						var="projectId" value="template.projectId" /> <%
+				if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.PROMOCODE)))
+				{%> <s:if test="%{#projectId!='' && #projectId>0 }">
+						<s:a action="displayPromocode.do" id="promocode" escapeAmp="false">
+							<s:param name="codeConfig.projectId" value="template.projectId" />
+							<s:param name="codeValue.count" value="0" />
+							<%--<s:a action="displayPromocode.do" id="promocode" escapeAmp="false"><s:param name="codeConfig.projectId" value="22"/><s:param name="codeValue.count" value="0"/>--%>
+							<img
+								src="<s:property value="%{@main.java.com.mps.common.AppSystem@STATIC_PATH}"/>/img/generatepromo.png"
+								title="Generate Promo" />
+						</s:a>
+					</s:if> <%}
+				%></td>
+
+
+				<td style="text-align: center;"><input type="checkbox"
+					name="fieldMandatory<%=i %>" id="fieldMandatory<%=i %>" value="1"
+					readonly="readonly"></td>
+				<td><select name="fieldOrder<%=i %>" id="fieldOrder<%=i %>">
+						<%for(int ii=1;ii<13;ii++){ %>
+						<option value="<%=ii%>"><%=ii%></option>
+						<%} %>
+				</select></td>
+				<%if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.COUNTRY)))
+				{%>
+				<td><select name="countrySelected" id="countrySelected">
+						<%for (int is = 0; is < countryKey.length; is++)
+						{%>
+						<option value="<%=countryKey[is]%>"><%=countryList[is] %></option>
+						<%} %>
+				</select></td>
+				<%}	
+				if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.WHERE_DID_YOU_HEAR_ABOUT_US)))
+				{%>
+				<td><select name="hearus" id="hearus">
+						<%for (int iss = 0; iss < hearUSKey.length; iss++)
+						{%>
+						<option value="<%=hearUSKey[iss]%>"><%=hearUSList[iss] %></option>
+						<%} %>
+				</select></td>
+				<%}
+				else
+				{%>
+				<td>&nbsp;</td>
+				<%}%>
+
+
+
+				<%if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.STATE)))
+				{
+				%>
+				<td><input type="text" name="footNote" id="footNote" /></td>
+				<%}
+				else
+				{%>
+				<td>&nbsp;</td>
+				<%
+				}
+				%>
+
+			</tr>
+
+			<%}
+         	  else
+         	  {
+         		 for(ProjectField obj : projectFieldList)
+         		 {
+         			 if(obj.getFldId()==i)
+         			 {
+           	  %>
+
+			<tr>
+				<td style="text-align: center;" align="justify">
+					<%
+				System.out.println("fieldName[i]===="+obj.getAutoId()+"==="+i);
+				if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.PROMOCODE))){
+					System.out.println("fieldName[i]===="+fieldId[i]+"==="+i);%> <s:a
+						action="displayPromocode.do" id="promocode1" escapeAmp="false">
+						<s:param name="codeConfig.projectId" value="template.projectId" />
+						<s:param name="codeValue.count" value="0" />
+						<input type="checkbox" name="checked<%=i %>" id="checked<%=i %>"
+							<%if(obj.getFldId()==i){ if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.PROMOCODE))){ if(promoConfigExist.equalsIgnoreCase("true")){ %>
+							checked="checked" <%}}else {%> checked="checked" <%}%> <%}%>
+							<%if(obj.getFldId()==i && projectFieldListDB.contains(String.valueOf(obj.getFldId()))){%>
+							<%=disabled%> <%}%>>
+					</s:a> <%}
+				else if(!fieldName[i].equalsIgnoreCase("Promo Codes"))
+				{
+				%> <input type="checkbox" name="checked<%=i %>" id="checked<%=i %>"
+					<%if(obj.getFldId()==i){ if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.PROMOCODE))){ if(promoConfigExist.equalsIgnoreCase("true")){ %>
+					checked="checked" <%}}else {%> checked="checked" <%}}%>
+					<%if(obj.getFldId()==i && projectFieldListDB.contains(String.valueOf(obj.getFldId()))){%>
+					<%=disabled%> <%}%>> <%} %>
+				</td>
+				<td width="20" align="justify"><input type="text"
+					name="fieldId<%=i %>" id="fieldId<%=i %>" value="<%=i %>"
+					readonly="readonly"></td>
+				<td><input type="text" name="fieldLabel<%=i %>"
+					id="fieldLabel<%=i %>" value="<%=fieldName[i] %>"
+					readonly="readonly"></td>
+				<td><input type="text" name="fieldType<%=i %>"
+					id="fieldType<%=i %>" value="<%=fieldType[i] %>"
+					readonly="readonly"></td>
+
+				<td><input type="text" name="fieldName<%=i %>"
+					id="fieldName<%=i %>" value="<%=obj.getFldText() %>"
+					<%if(obj.getFldId()==i && projectFieldListDB.contains(String.valueOf(obj.getFldId()))){%>
+					<%=disabled%> <%}%>> <s:set var="projectId"
+						value="template.projectId" /> <%
+				if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.PROMOCODE)))
+				{%> <s:if test="%{#projectId!='' && #projectId>0 }">
+						<s:a action="displayPromocode.do" id="promocode" escapeAmp="false">
+							<s:param name="codeConfig.projectId" value="template.projectId" />
+							<s:param name="codeValue.count" value="0" />
+							<%--<s:a action="displayPromocode.do" id="promocode" escapeAmp="false"><s:param name="codeConfig.projectId" value="22"/><s:param name="codeValue.count" value="0"/>--%>
+							<!--<strong>Promo Code</strong>-->
+							<img
+								src="<s:property value="%{@main.java.com.mps.common.AppSystem@STATIC_PATH}"/>/img/generatepromo.png"
+								title="Generate Promo" />
+						</s:a>
+					</s:if> <%}
+				%></td>
+
+
+				<td style="text-align: center;"><input type="checkbox"
+					name="fieldMandatory<%=i %>" id="fieldMandatory<%=i %>" value="1"
+					<%if(obj.getFldMandatory()==1){ %> checked="checked" <%} %>
+					<%if(obj.getFldId()==i && projectFieldListDB.contains(String.valueOf(obj.getFldId()))){%>
+					<%=disabled%> <%}%>></td>
+				<td><select name="fieldOrder<%=i %>" id="fieldOrder<%=i %>"
+					<%if(obj.getFldId()==i && projectFieldListDB.contains(String.valueOf(obj.getFldId()))){%>
+					<%=disabled%> <%}%>>
+						<%for(int ii=1;ii<13;ii++){ %>
+						<option value="<%=ii%>" <%if(obj.getFldOrder()==ii){ %>
+							selected="selected" <%} %>><%=ii%></option>
+						<%} %>
+				</select></td>
+
+
+				<!-- New Fields Added -->
+
+				<%
+				System.out.println("New Fields Added=="+fieldName[i]+"==obj.getFldDefault()=="+obj.getFldDefault());
+				if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.COUNTRY)))
+				{%>
+				<td><select name="countrySelected" id="countrySelected"
+					<%if(obj.getFldId()==i && projectFieldListDB.contains(String.valueOf(obj.getFldId()))){%>
+					<%=disabled%> <%}%>>
+						<%for (int is = 0; is < countryKey.length; is++)
+						{%>
+						<option value="<%=countryKey[is]%>"
+							<% if(obj.getFldDefault()!=null) if(obj.getFldDefault().equalsIgnoreCase(countryKey[is])){%>
+							selected="selected" <%} %>><%=countryList[is] %></option>
+						<%} %>
+				</select></td>
+				<%}	
+				if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.WHERE_DID_YOU_HEAR_ABOUT_US)))
+				{%>
+				<td><select name="hearus" id="hearus"
+					<%if(obj.getFldId()==i && projectFieldListDB.contains(String.valueOf(obj.getFldId()))){%>
+					<%=disabled%> <%}%>>
+						<%for (int iss = 0; iss < hearUSKey.length; iss++)
+						{%>
+						<option value="<%=hearUSKey[iss]%>"
+							<% if(obj.getFldDefault()!=null) if(obj.getFldDefault().equalsIgnoreCase(hearUSKey[iss])){%>
+							selected="selected" <%} %>><%=hearUSList[iss] %></option>
+						<%} %>
+				</select></td>
+				<%}
+				else
+				{%>
+				<td>&nbsp;</td>
+				<%}%>
+
+
+
+				<%if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.STATE)))
+				{
+					String footNoteVal="";
+					if(obj.getFldFootnote()!=null)
+					{
+						footNoteVal=obj.getFldFootnote();
+					}
+				%>
+				<td><input type="text" name="footNote" id="footNote"
+					value="<%=footNoteVal%>"
+					<%if(obj.getFldId()==i && projectFieldListDB.contains(String.valueOf(obj.getFldId()))){%>
+					<%=disabled%> <%}%> /></td>
+				<%}
+				else
+				{%>
+				<td>&nbsp;</td>
+				<%
+				}
+				%>
+
+				<!-- End -->
+
+
+
+			</tr>
+			<%
+				 b=true;
+         			 }
+         			 else if(arr.contains(i))
+         			 {
+         				 b=false;
+         			 }
+         			 else 
+         			 {%>
+			<tr>
+				<td style="text-align: center;" align="justify">
+					<%if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.PROMOCODE)))
+				{
+				System.out.println("fieldName[i]===="+fieldName[i]+"==="+i);%> <s:a
+						action="displayPromocode.do" id="promocode1" escapeAmp="false">
+						<s:param name="codeConfig.projectId" value="template.projectId" />
+						<s:param name="codeValue.count" value="0" />
+						<input type="checkbox" name="checked<%=i %>" id="checked<%=i %>">
+					</s:a> <%}
+				else 
+				{
+				%> <input type="checkbox" name="checked<%=i %>" id="checked<%=i %>">
+					<%} 
+			   %>
+
+				</td>
+				<td width="20" align="justify"><input type="text"
+					name="fieldId<%=i %>" id="fieldId<%=i %>" value="<%=i %>"
+					readonly="readonly"></td>
+				<td><input type="text" name="fieldLabel<%=i %>"
+					id="fieldLabel<%=i %>" value="<%=fieldName[i] %>"
+					readonly="readonly"></td>
+				<td><input type="text" name="fieldType<%=i %>"
+					id="fieldType<%=i %>" value="<%=fieldType[i] %>"
+					readonly="readonly"></td>
+
+				<td><input type="text" name="fieldName<%=i %>"
+					id="fieldName<%=i %>" value="<%=fieldName[i] %>"> <s:set
+						var="projectId" value="template.projectId" /> <%
+				if(fieldName[i].equalsIgnoreCase("Promo Codes"))
+				{%> <s:if test="%{#projectId!='' && #projectId>0 }">
+						<s:a action="displayPromocode.do" id="promocode" escapeAmp="false">
+							<s:param name="codeConfig.projectId" value="template.projectId" />
+							<s:param name="codeValue.count" value="0" />
+							<%--<s:a action="displayPromocode.do" id="promocode" escapeAmp="false"><s:param name="codeConfig.projectId" value="22"/><s:param name="codeValue.count" value="0"/>--%>
+							<!--<strong>Promo Code</strong>-->
+							<img
+								src="<s:property value="%{@main.java.com.mps.common.AppSystem@STATIC_PATH}"/>/img/generatepromo.png"
+								title="Generate Promo" />
+						</s:a>
+					</s:if> <%}
+				%></td>
+
+
+				<td style="text-align: center;"><input type="checkbox"
+					name="fieldMandatory<%=i %>" id="fieldMandatory<%=i %>" value="1"
+					readonly="readonly"></td>
+				<td><select name="fieldOrder<%=i %>" id="fieldOrder<%=i %>">
+						<%for(int ii=1;ii<13;ii++){ %>
+						<option value="<%=ii%>"><%=ii%></option>
+						<%} %>
+				</select></td>
+
+
+
+
+				<!-- New Fields Added -->
+
+				<%
+				System.out.println("New Fields Added=="+fieldName[i]);
+				if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.COUNTRY)))
+				{%>
+				<td><select name="countrySelected" id="countrySelected">
+						<%for (int is = 0; is < countryKey.length; is++)
+						{%>
+						<option value="<%=countryKey[is]%>"
+							<% if(obj.getFldDefault()!=null) if(obj.getFldDefault().equalsIgnoreCase(countryKey[is])){%>
+							selected="selected" <%} %>><%=countryList[is] %></option>
+						<%} %>
+				</select></td>
+				<%}	
+				if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.WHERE_DID_YOU_HEAR_ABOUT_US)))
+				{%>
+				<td><select name="hearus" id="hearus">
+						<%for (int iss = 0; iss < hearUSKey.length; iss++)
+						{%>
+						<option value="<%=hearUSKey[iss]%>"
+							<% if(obj.getFldDefault()!=null) if(obj.getFldDefault().equalsIgnoreCase(hearUSKey[iss])){%>
+							selected="selected" <%} %>><%=hearUSList[iss] %></option>
+						<%} %>
+				</select></td>
+				<%}
+				else
+				{%>
+				<td>&nbsp;</td>
+				<%}%>
+
+
+
+				<%if(fieldId[i].equalsIgnoreCase(String.valueOf(DynamicFieldConstants.STATE)))
+				{
+					String footNoteVal="";
+					if(obj.getFldFootnote()!=null)
+					{
+						footNoteVal=obj.getFldFootnote();
+					}
+				%>
+				<td><input type="text" name="footNote" id="footNote"
+					value="<%=footNoteVal%>" /></td>
+				<%}
+				else
+				{%>
+				<td>&nbsp;</td>
+				<%
+				}
+				%>
+
+				<!-- End -->
+
+
+
+			</tr>
+			<%
+         			b=true;
+         			//break;
+         			 }
+         			 if(b)
+         				 break;	
+         			 }
+         		
+         		 }
+         	  } %>
+
+		</table>
+		<%}
+else
+{if(successMessage!=""){%>
+
+		<table cellpadding="0" cellspacing="0" id="dataTable" border="1"
+			style="background-color: #dfeffc; border-color: #dfeffc; border: thin;">
+
+			<tr style="font-size: 12px">
+
+				<th><%=successMessage %></th>
+
+			</tr>
+			<%}}
+%>
+			</s:form>
+
+			<input type="hidden" name="successMessage"
+				value="<%=successMessage %>" id="successMessage">
+			<input type="hidden" name="htmlContent1" value="<%=htmlContent %>"
+				id="htmlContent1">
+			<input type="hidden" name="pageCheck" value="<%=pageCheck %>"
+				id="pageCheck">
+			<script>
+		
+		
+		  
+		   
+		   
+		jQuery(document).ready(function(){
+			  $("#promocode, #promocode1").fancybox({
+					'width'				: '80%',		
+					'autoScale'			: 'true',
+					'transitionIn'		: 'elastic',
+					'transitionOut'		: 'elastic',
+					'type'				: 'iframe',
+					'padding'			: '0',
+					'margin'			: '0',
+					'top'				: '0',
+					'left'				: '0',
+					'scrolling'   		: 'auto',
+					 'onComplete' : function() {
+						    $('#fancybox-frame').load(function() { // wait for frame to load and then gets it's height
+						      $('#fancybox-content').height($(this).contents().find('body').height()+20);
+						    });
+					}
+				});
+		});
+		
+	
+		</script>
+
+
+			<s:hidden name="template.templateId" id="templateId" />
+			<s:hidden name="pageId" id="pageId" value="%{request.pageId}" />
+			<%
+	if(projectFieldList!=null)
+	{
+	%>
+			<div class="btnWrapper">
+				<sj:submit id="grid_edit_addbutton" value="Submit" button="true"
+					indicator="indicator" formIds="submit"
+					onclick="javascript:getFielddata('dataTable');" />
+				<sj:submit id="grid_cancel" value="Cancel" onClickTopics="cancel"
+					button="true" onclick="javascript:parent.jQuery.fancybox.close();" />
+			</div>
+			<%
+	}
+	%>
+			</s:div>
+			<script>
+function onLoad()
+{
+	var pageCheck="";
+	if(document.getElementById("successMessage").value!="")
+		{
+		parent.document.getElementById("htmlContent").value=document.getElementById("htmlContent1").value;
+		pageCheck=document.getElementById("pageCheck").value;
+		if(pageCheck==null) pageCheck="";
+		
+		if(document.getElementById("htmlContent1").value!="")
+			{
+			
+			var pageide = parent.document.getElementById('pageide').value;
+			var pageid;
+			pageid=parseInt(pageide);
+			
+			parent.document.frm.action="ebbs/nextPageSubmit.do?back="+pageCheck+"&refershPage=true&buttonClicked=true";
+			parent.document.getElementById('pageide').value=pageid;
+			parent.document.frm.submit();
+			
+		
+		
+			}
+		}
+}
+onLoad();
+</script>
+
+			<s:hidden name="pageId" id="pageId" value="%{request.pageId}" />

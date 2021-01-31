@@ -1,0 +1,73 @@
+<!-- Error.htm (ADEPTLink Sample Code - Error Page)                              -->
+<!--                                                                             -->
+<!-- Description:  This HTML page is used by the ADEPTLink sample code to report -->
+<!--                  fulfillment errors.  Typically, ADEPTLink clients would    -->
+<!--                  create their own error page that matched the design of     -->
+<!--                  their site.  This sample error page shows the three        -->
+<!--                  pieces of data passed on the query string (URL params)     -->
+<!--                  from the ADEPTLink servers when an error occurs:           -->
+<!--                  1) ErrorCode (numeric value)                               -->
+<!--                  2) ErrorDescription (text description of error code)       -->
+<!--                  3) ErrorDetails     (text details of error)                -->
+<!-- Author:       Content Reserve Support                                       -->
+<!-- Company:      OverDrive, Inc.                                               -->
+<!-- Last updated: August, 2007                                                  -->
+
+<!-- Note: This sample error page uses client-side script to access the error    -->
+<!--       information passed in on the URL.  Typically, ADEPTLink clients would -->
+<!--       use server-side code to extract this information from the URL, as     -->
+<!--       this script will likely not work on all browsers.                     -->
+
+<html>
+
+<head>
+<title>ADEPTLink Sample Code - Error Page</title>
+</head>
+
+<body>
+<p><big><b>ADEPTLink Sample Code - Error Page</b></big></p>
+
+<!-- create script used to extract the error information from the query string -->
+<script language="JavaScript"><!--
+// get the full URL of this error page:
+var szURL = document.URL;
+
+// extract the "error code" from the full URL of this error page:
+var szErrorCode = szURL.substr(szURL.indexOf("ErrorCode=") + 10);
+szErrorCode     = szErrorCode.substr(0, szErrorCode.indexOf("&"));
+
+// extract the "error description" from the full URL of this error page:
+var szErrorDescrip = szURL.substr(szURL.indexOf("ErrorDescription=") + 17);
+szErrorDescrip     = szErrorDescrip.substr(0, szErrorDescrip.indexOf("&"));
+
+// extract the "error details" from the full URL of this error page:
+var szErrorDetails = szURL.substr(szURL.indexOf("ErrorDetails=") + 13);
+
+// URL decode the three strings by unescaping characters and replacing '+' w/ spaces:
+szErrorCode    = unescape(szErrorCode).replace(/\+/g, " ");
+szErrorDescrip = unescape(szErrorDescrip).replace(/\+/g, " ");
+szErrorDetails = unescape(szErrorDetails).replace(/\+/g, " ");
+//--></script>
+
+<!-- display a generic error message -->
+<p>We're sorry, but an error has occurred while attempting to download your eBook.</p>
+
+<!-- display the error information passed in -->
+<table border="0" cellpadding="0" cellspacing="0">
+<tr valign="top">
+	<td>Error 0x<script language="JavaScript">document.write(szErrorCode);</script>:</td>
+	<td>&nbsp;&nbsp;</td>
+	<td><script language="JavaScript">document.write(szErrorDescrip);</script></td>
+</tr>
+<tr valign="top">
+	<td>Error Details:</td>
+	<td>&nbsp;&nbsp;</td>
+	<td><script language="JavaScript">document.write(szErrorDetails);</script></td>
+</tr>
+</table>
+
+<!-- display a generic support message -->
+<p>If this problem persists, please contact customer support.</p>
+
+</body>
+</html>

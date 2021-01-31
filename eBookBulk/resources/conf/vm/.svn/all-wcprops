@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/projects/!svn/ver/72825/Wiley/trunk/Projects/eBookBulk/resources/conf/vm
+END
+forgotpassword.vm
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/projects/!svn/ver/72512/Wiley/trunk/Projects/eBookBulk/resources/conf/vm/forgotpassword.vm
+END
+project_history.vm
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/projects/!svn/ver/72181/Wiley/trunk/Projects/eBookBulk/resources/conf/vm/project_history.vm
+END
+url_promocode.vm
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/projects/!svn/ver/72825/Wiley/trunk/Projects/eBookBulk/resources/conf/vm/url_promocode.vm
+END

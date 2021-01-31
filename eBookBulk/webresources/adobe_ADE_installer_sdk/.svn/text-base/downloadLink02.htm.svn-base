@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+html {
+	font-size: 100%; /*overflow-y: scroll; */
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+body {
+	margin: 0;
+	font-size: 11px;
+	line-height: 1.231;
+	background-color:#fff
+}
+body, button, input, select, textarea {
+	font-family: sans-serif;
+	color: #222;
+}
+#downloadWrapper {
+	margin:20px;
+	text-align:center;
+}
+#downloadWrapper .box01 {
+	padding:8px;
+	border:2px solid #46aac5;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	background: #e4f9ff; /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U0ZjlmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM5ZmVhZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(top,  #e4f9ff 0%, #9feaff 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e4f9ff), color-stop(100%,#9feaff)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #e4f9ff 0%,#9feaff 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #e4f9ff 0%,#9feaff 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #e4f9ff 0%,#9feaff 100%); /* IE10+ */
+background: linear-gradient(top,  #e4f9ff 0%,#9feaff 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e4f9ff', endColorstr='#9feaff',GradientType=0 ); /* IE6-8 */
+}
+#downloadWrapper .whiteBox{
+	border:2px solid #46aac5;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	background:#fff;
+	text-align:left;
+	padding:15px;
+}
+#downloadWrapper .whiteBox h2{margin:0 0 8px 0;color:#006a87}
+#downloadWrapper .whiteBox li{line-height:18px;}
+#downloadWrapper .whiteBox p{margin-bottom:15px;}
+#downloadWrapper .box01 div.bookTitle {
+	margin-bottom:5px;
+	background:#f2f2f2;
+	padding:5px;
+	border:1px solid #ccc;
+}
+#downloadWrapper .box01 #bookCover {
+	padding-top:10px;
+	text-align:center;
+	width:97%;
+	padding-right:7px;
+}
+#downloadWrapper .box01 #bookCover div {
+	background:#f2f2f2;
+	padding:5px;
+}
+#downloadWrapper .box02 {
+	float:left;
+	vertical-align:middle;
+	width:8%;
+	margin-left:45px;
+	font-weight:bold;
+}
+#downloadWrapper .ADEInstallerBox {
+	padding:10px 8px 8px 8px;
+	float:left;
+	width:40.5%;
+	border:1px solid #46aac5;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	text-align:center;
+	min-height:220px;
+}
+.center{text-align:center;}
+.instructionTbl{background:#fff; border-color:#33;border-collapse:collapse;}
+</style>
+</head>
+<script language="javascript" src="ADEBadgeLauncher.js" type="text/javascript"></script>
+<script language="javascript">
+<!--
+/*************************************************************
+ *
+ * ADOBE SYSTEMS INCORPORATED
+ * Copyright 2006-2009 Adobe Systems Incorporated
+ * All Rights Reserved
+ *
+ * NOTICE: Adobe permits you to use, modify, and distribute
+ * this file in accordance with the terms of the Adobe license
+ * agreement accompanying it. If you have received this file
+ * from a source other than Adobe, then your use, modification,
+ * or distribution of it requires the prior written permission
+ * of Adobe.
+ *
+ *************************************************************/
+
+// ********************
+//	ade_badge_example.htm
+//
+//  This example shows Launcher Mode for sending content to Adobe Digital Editions
+//  There are examples to send Content in Clear (un-encrypted content) as well as performing GBLink fulfillment links.
+//
+//  See the adeptlink_example to use AdeptLink forms.
+//
+//  When using real Signed GBlink URL from a true server-side implementation, 
+//  please carefully search out the fix_gblink_plus_characters() function and 
+//  comments regarding its usage in server-side to prepare the URL for ADEBadgeLauncherInstance()
+//
+//  Also reference GBLinkExample_ADE_JS.asp for working example to use fix_gblink_plus_characters()
+//
+//  NOTE: This code and the sample code should be used from a web browser for
+//  true test of the environment.  Opening the sample HTML files directly from the
+//  file system may produce un-desirable results due to the flash security model
+//  To ensure good test results, place the sample code all in a single folder then expose
+//  that folder as a virtual directory from your favorite web server.
+// ********************
+
+//-----------------------------------------------------------------------------
+//  Maintenance Log:
+//  04/17/2008	the (3) buttonLabel params were removed
+//				buttonLabelNotRequirements, buttonLabelNot, buttonLabelInst
+//  04/03/2008	1.5	Adjust buttonLabel settings to use internal defaults in some cases
+//  04/01/2008	1.4	Move fix_gblink_plus_characters off to ADEBadgeLauncher.js
+//					Add unencrypted PDF example. Commenting updates
+//  03/05/2008	1.3	Removed launcherDivLayer5
+//  01/23/2008	1.2	update to use sendSWFVersion and sendButtonPush
+//					add stubs ShowSWFVersion_DivLayer(), ADE_SWF_ButtonPush_action()
+//-----------------------------------------------------------------------------
+
+// ********************
+// Stub function provided to support operation
+// independent of DigitalEditionsDetection.js
+// ********************
+function ShowADE_DivLayer()
+{
+	// This example does not use DigitalEditionsDetection.js
+	// Therefore this stub is needed
+	return;
+}
+
+// ********************
+// Stub function provided to support operation for SWF Version
+// This is called when sendSWFVersion = "true"
+// and the script at setG_strSWFVersion() detects a fresh string
+// ********************
+function ShowSWFVersion_DivLayer()
+{
+	// We dont have a DIV for the version, so we do nothing here
+	return;
+}
+
+// ********************
+// Stub function provided to support send_ADE_SWF_ButtonPush()
+// That anchor function will call the stub
+// This way, the anchor function is always defined, and various
+// implementations can provide the stub where needed
+// ********************
+function ADE_SWF_ButtonPush_action()
+{
+	// Copy and enable this function into your
+	// implementations where sendButtonPush = "true"
+	
+	//  NOTE: When sendButtonPush = "true", then even if contentURL is set, it will not
+	//  be sent to ADE after it is launched.  When sendButtonPush = "true", all that happens
+	//  after ADE is launched is that the JS Callback is made, and that is it.
+	
+	// We dont do this, but stub is provided anyway
+	return;
+}
+
+
+function doOnLoad()
+{
+	// Please reference ADEBadgeLauncher.js for full documentation
+	
+	//  HTML Section params:
+	//  =========================
+	// HTMLdivID - id of the <div> which will hold the SWF
+	// HTMLobjectID - desired ID for the HTML <object> that contains the SWF (may be null - default is ADEBadgeLauncherInstance)
+	
+	//  Flash SWF parameters:
+	//  =========================
+	//	contentURL - (string) 
+	//  URL to the PDF or ePub content which DE will download, 
+	//  or DRM fulfillment URL (see doFulfillmentLink)
+	//  The URL must be escaped (js escape() function) to retain its integrity
+	//
+	//  ------------------------------
+	//  doFulfillmentLink - (true, false)
+	//  true - submit "contentURL" parameter into browser (for DRM fulfillment URL)
+	//  false - pass "contentURL" through LocalConnection into DE. DE will download the 
+	//  content and open
+	
+	
+	// *******************************
+	// FOR launcherDivLayer1
+	// *******************************
+	
+	//  HTML Section params:
+	//  =========================
+	var HTMLdivID = "launcherDivLayer1"; 
+	var HTMLobjectID = "ADEBadgeLauncherInstance1";
+	
+	//  Flash SWF parameters:
+	//  =========================
+	//var contentURL = "http://ebookfulfill.adobe.com/fulfill/ebx.etd?action=free&ordersource=adbestor&bookid=ISBN:1930161069";
+	var contentURL = "http://demobulksales.mpstechnologies.com/adobe_ADE_installer_sdk/samples/Sway_oneChapter.epub";	
+	var autoInstall = false; 
+	var autoLaunch = false;
+	var badFlashRedirectURL	= null; // "http://my.domain.com/flashhelp";  // null; // can be null
+	
+	var doFulfillmentLink = false;	// NEEDED for ACS fulfillment
+	var sendADEInstalled = false;
+	var sendSWFVersion = false;
+	var sendButtonPush = false;  // if true, only call the JS function - contentURL would be ignored if used
+	
+	// must ESCAPE the URL
+	var escapedContentURL = escape(contentURL);
+	
+	// NOTE: For including a GBLink URL here, there are other special considerations
+	// NOTE: This is for a server-side implementation where the server is serving out these pages.
+	// Like Microsoft IIS server running asp server-side javascript, or any other server environment
+	//
+	// PLEASE SEE detailed comment at the fix_gblink_plus_characters() function
+	//
+	// This variable would be declared outside this client-side script block in the server scope
+	// var server_side_GBLinkURL;   // assign GBLink URL into this somewhere in server code
+	//
+	// This line would plop the server_side_GBLinkURL as text into the client javascript
+	// var escapedContentURL = escape("<%=server_side_GBLinkURL%>");
+	//
+	// This line will fix the + into %2B for proper operation
+	// escapedContentURL = fix_gblink_plus_characters(escapedContentURL);
+	
+	ADEBadgeLauncherInstance(HTMLdivID, HTMLobjectID, escapedContentURL, doFulfillmentLink, autoInstall, autoLaunch, badFlashRedirectURL, sendADEInstalled, sendSWFVersion, sendButtonPush);	
+	
+}
+
+//-->
+</script>
+<body onLoad="doOnLoad();" style="font-size: 11px; line-height: 1.231; font-family: sans-serif; color: #222;">
+<div id="template01" style="width:920px;position:relative;height:670px;margin:0 auto;border:1px solid #ccc;">
+ <div id="header" style="position:absolute;width:908px;background:#ebf2f4;border:3px solid #46aac5;padding:3px;height:115px;margin-bottom:5px;">
+  <div id="col-1" style="position:absolute;width:150px;left:0;margin:8px 10px;"><img src="../img/publisher-logo.png" alt=""></div>
+  <div id="col-2" style="position:absolute;margin:8px 10px;left:170px;">
+   <h1 style="font-size:23px; color:#006a87;margin:0 0 6px 0;padding:0;">Modern Publishers</h1>
+      <p id="desc" style="font-size:13px; color:#006a87; font-style:italic;">Leader in Digital Publishing</p>
+  </div>
+ </div>
+ <div style="float:right;position:absolute;top:140px;left:18px;"><a href="javascript:history.back(-1);">Back</a></div>
+<div id="downloadWrapper" style="position:absolute;top:150px;">
+<div class="box01">
+<div class="whiteBox">
+<h2>Instructions</h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" class="instructionTbl">
+ <tr>
+  <td width="50%" valign="top"><strong>ADE installed</strong></td>
+  <td width="50%" valign="top"><strong>ADE not installed</strong></td>
+ </tr>
+ <tr>
+  <td valign="top"><ul>
+   <li>Click the read button below. It will open the book directly into your ADE.</li></ul></td>
+  <td valign="top"><ul>
+   <li>If you don't have it iinstalled on your machine click the install and read button below.</li>
+   <li>Choose Install button and it will guide you to rest of the process.</li>
+   <li>Upon completing the installation, the book will automatically open into your ADE.</li>
+  </ul></td>
+  </tr>
+</table>
+  <p>Any further help please contact <a href="mailto:wileyadmin@ebookstore.com" title="wileyadmin@ebookstore.com" target="_self">wileyadmin@ebookstore.com</a> or visit our FAQ’s Section.</p>
+  <!-- Download "button" - the SWF -->
+  <div class="center"><div id="launcherDivLayer1"></div></div>
+</div>  
+  </div>
+ </div>
+ <div style="clear:both"></div>
+ <div id="footer" style="position:absolute;top:680px;width:918px;margin:0 auto;text-align:center;background:#f2f2f2; border:1px solid #46aac5;height:50px;vertical-align:middle;">
+  <p style="text-align:center; font-size:11px; color:#666;line-height:45px;">&copy; All Rights Reserved.</p>
+ </div>
+</div>
+</body>
+</html>

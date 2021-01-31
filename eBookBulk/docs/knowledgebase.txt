@@ -1,0 +1,16 @@
+****************** NOT DISCOVER ********************
+
+Redirect between LoginAction & UserAction
+Date Issues via jquery plugin datepicker
+Access jsp java variable via Ognl expression
+parameters in Action class via parameters & Ognl expression
+Grid multiple Data submission
+Grid Validation message
+Validation via annotations
+
+****************** NOT DISCOVER ********************
+
+****************** DISCOVER ********************
+Access static constants via Ognl
+****************** DISCOVER ********************
+  

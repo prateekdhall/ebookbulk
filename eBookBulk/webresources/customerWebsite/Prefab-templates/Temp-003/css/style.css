@@ -1,0 +1,19 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0px; padding:0px}body, html{ width:100%; height:100%; font-family: "Myriad Pro", arial; font-size:13px; color:#000; }
+img{ border:0px; color:;} a{text-decoration:none;} h1{font-size:17px;color:#000;font-weight:bold;margin:0 0 6px 0;padding:0;text-transform:uppercase} .mandatory{color:#F00;}p{font-size:12px;line-height:20px;margin-bottom:6px;} 
+h2{font-size:15px;color:#000;font-weight:bold;margin:0 0 6px 0;padding:0;text-transform:uppercase}
+.wrapper{ width:920px; background-color:#FAFAFA;margin:0px auto; position:relative;}
+#header{background:url('../images/shadow.png')  repeat-x 0 0 #FAFAFA;  height: 115px;margin-bottom: 5px; padding: 3px;
+    position: absolute; width: 908px;} .logo{position:absolute;margin:8px 10px;left:0px;top:46px;} .logo h1{ font-size:23px;!important;margin:0 0 2px 0;} .logo-icon{position:absolute;width:150px;left:25px;margin:2px 10px;}
+.register{ background: none repeat scroll 0 0 #FAFAFA; border: 3px solid #8687CF; min-height:402px; padding: 8px; position: absolute;
+    right: 0; top: 135px;  width: 225px;height:auto !important;}
+.tradingprice{ background: none repeat scroll 0 0 #FAFAFA; border: 3px solid #8687CF; min-height:402px; height:auto !important; padding: 8px; position: absolute;
+    top: 135px;  width: 645px;}
+#bookCover{border:1px solid #ccc; padding:4px;width:100px;height:155px;float:left;margin:0 15px 10px 0; background-color:#FAFAFA;}
+select{margin-bottom:15px;min-width:225px;font-size:11px; border:1px solid #8687CF} input[type=text]{margin-bottom:6px;min-width:220px; border:1px solid #8687CF}
+.button{padding:3px 9px;font-size:11px;color:#FAFAFA;border:none;background:#8687CF;background: -moz-linear-gradient(top,  #FAFAFA 0%, #ABACDE 16%, #8687CF 29%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,), color-stop(16%,#E7DAB8), color-stop(29%,#8687CF)); background: -webkit-linear-gradient(top,   0%,#ABACDE 16%,#8687CF 29%); background: -o-linear-gradient(top,  #87e0fd 0%,#ABACDE 16%,#05abe0 29%); background: -ms-linear-gradient(top,   0%,#ABACDE 16%,#8687CF 29%); background: linear-gradient(top,  #87e0fd 0%,#53cbf1 16%,#8687CF 29%); margin: 5px 0 1px;}
+.review{background: #FAFAFA repeat scroll 0 0 ;border: 3px solid #8687CF;min-height: 172px;margin-right: 5px;padding: 8px;position: absolute;top: 365px; width: 225px;height:auto !important;}
+.author-info{ background: #FAFAFA none repeat scroll 0 0 ; border: 3px solid #8687CF;min-height: 172px; height:auto !important; left: 253px;margin-bottom: 5px; padding: 8px;  position: absolute; top: 365px; width: 392px;}
+#footer{position:absolute;top:568px;width:914px;margin:0 auto;text-align:center;background:#FAFAFA; border:3px solid #8687CF; min-height:25px;vertical-align:middle;height:auto !important;}
+

@@ -1,0 +1,1209 @@
+package main.java.com.mps.wiley.ebb.action;
+
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import main.java.com.mps.common.AppSystem;
+import main.java.com.mps.common.struts2.action.Struts2AbstractAction;
+import main.java.com.mps.wiley.common.AppConstants;
+import main.java.com.mps.wiley.common.DynamicFieldConstants;
+import main.java.com.mps.wiley.ebb.domain.CodeConfig;
+import main.java.com.mps.wiley.ebb.domain.ContentFile;
+import main.java.com.mps.wiley.ebb.domain.DynamicField;
+import main.java.com.mps.wiley.ebb.domain.ExceptionMessage;
+import main.java.com.mps.wiley.ebb.domain.Project;
+import main.java.com.mps.wiley.ebb.domain.ProjectField;
+import main.java.com.mps.wiley.ebb.domain.Template;
+import main.java.com.mps.wiley.ebb.domain.User;
+import main.java.com.mps.wiley.ebb.service.ContentFileService;
+import main.java.com.mps.wiley.ebb.service.DynamicFieldService;
+import main.java.com.mps.wiley.ebb.service.ProjectFieldService;
+import main.java.com.mps.wiley.ebb.service.ProjectService;
+import main.java.com.mps.wiley.ebb.service.PromoCodeService;
+import main.java.com.mps.wiley.ebb.service.TemplateService;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+
+import com.opensymphony.xwork2.ModelDriven;
+
+
+@ParentPackage("ebbs")
+@Namespace("/ebbs")
+public class TemplateAction extends Struts2AbstractAction implements ModelDriven<Template>
+{
+	private static final long serialVersionUID = -2679434689701858066L;
+	
+	private Template template;
+	
+	private int actionName;
+	
+	private List<Template> temlateList;
+	
+	private Project project;
+	
+	List<ExceptionMessage> exceptionMessageListObj = new ArrayList<ExceptionMessage>();
+	List<ContentFile> contentFileList = new ArrayList<ContentFile>();
+	
+	/**
+	 * @return the template
+	 */
+	public final Template getTemplate()
+	{
+		return template;
+	}
+	
+	/**
+	 * @param template
+	 *           the template to set
+	 */
+	public final void setTemplate(Template template)
+	{
+		this.template = template;
+	}
+	
+	/**
+	 * @return the actionName
+	 */
+	public final int getActionName()
+	{
+		return actionName;
+	}
+	
+	/**
+	 * @param actionName
+	 *           the actionName to set
+	 */
+	public final void setActionName(int actionName)
+	{
+		this.actionName = actionName;
+	}
+	
+	/**
+	 * @return the temlateList
+	 */
+	public final List<Template> getTemlateList()
+	{
+		return temlateList;
+	}
+	
+	@Override
+	public Template getModel()
+	{
+		return template = new Template();
+	}
+	
+	@Autowired
+	TemplateService tmplService;
+	
+	@Autowired
+	DynamicFieldService dynamicFieldService;
+	
+	@Autowired
+	private ProjectFieldService projectFieldService;
+	
+	@Autowired
+	PromoCodeService promoCodeService;
+	
+	@Autowired
+	private ProjectService prjService;
+	
+	@Autowired
+	private ContentFileService cfService;
+	
+	final String strFileSeperator = "/";
+	
+	final String DYNAMICTEMPLATESTRING = "dynamictemplatestring";
+	
+	final String coverImgaeFilePath = AppSystem.getConfig("app.template.coverbook.physicalpath") + strFileSeperator;
+	
+	String newFileTemplateStr = "<div id='dynamicHtml'></div>";
+	
+	final String FILETEMPLATENAME = "userFileTemplateName";
+	final String PFLIST = "projectFieldSessionList";
+	
+	final String PROMOREGFLAG = "promoCodeRegistrationFlag";
+	
+	DynamicFieldGridAction dynamicFieldAction = new DynamicFieldGridAction();
+	
+	@Action(value = "createTemplate", results = {@Result(name = "success", type = "tiles", location = "template"), @Result(name = "success2", type = "tiles", location = "templateDiv"), @Result(name = "input", type = "redirect", location = "home.do")})
+	public String getAllTemplates()
+	{
+		String strReturn = SUCCESS;
+		try
+		{
+			session.remove(DYNAMICTEMPLATESTRING);
+			temlateList = tmplService.getTemplates();
+			System.out.println("template.getProjectId(): " + template.getProjectId());
+			if (null != template.getProjectId() && template.getProjectId() != 0)
+			{
+				strReturn = "success2";
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			addActionError(getText("error.unexpect"));
+			return INPUT;
+		}
+		return strReturn;
+	}
+	
+	@Action(value = "viewTemplate", interceptorRefs = {@InterceptorRef("commonStack")}, results = {@Result(name = "success", type = "tiles", location = "viewTemplate"), @Result(name = "input", type = "dispatcher", location = "/WEB-INF/view/jsp/alertrefresh.jsp")})
+	public String viewTemplate() throws Exception
+	{
+		try
+		{
+			session.remove(FILETEMPLATENAME);
+			session.remove(PFLIST);
+			session.remove(DYNAMICTEMPLATESTRING);
+			session.remove(PROMOREGFLAG);
+			
+			String countrySelected = "";
+			String hearus = "";
+			String footNote = "";
+			
+			
+			DynamicField objField = new DynamicField();
+			DynamicField dfObj = null;
+			List<DynamicField> objList = new ArrayList<DynamicField>();
+			
+			if (template.getProjectId() != null)
+			{
+				List<ProjectField> getprojectFieldList = projectFieldService.getProjectFieldByTemplateAndProjectId(template.getTemplateId(), template.getProjectId());
+				if (getprojectFieldList.size() > 0)
+				{
+					
+					for (ProjectField objProjectField : getprojectFieldList)
+					{
+						dfObj = AppSystem.DYNAMIC_FIELDS_MAP.get(objProjectField.getFldId());
+						objField.setFieldId(objProjectField.getFldId());
+						objField.setFieldName(objProjectField.getFldText());
+						objField.setFieldLabel(dfObj.getFieldLabel());
+						objField.setFieldType(dfObj.getFieldType());
+						if (objProjectField.getFldMandatory() == 0)
+						{
+							objField.setFieldMandatory("false");
+						}
+						else if (objProjectField.getFldMandatory() == 1)
+						{
+							objField.setFieldMandatory("true");
+						}
+						
+						
+						if (objProjectField.getFldId() == DynamicFieldConstants.COUNTRY)
+						{
+							if (objProjectField.getFldDefault() != null)
+							{
+								countrySelected = objProjectField.getFldDefault();
+							}
+						}
+						
+						
+						if (objProjectField.getFldId() == DynamicFieldConstants.WHERE_DID_YOU_HEAR_ABOUT_US)
+						{
+							if (objProjectField.getFldDefault() != null)
+							{
+								hearus = objProjectField.getFldDefault();
+							}
+						}
+						
+						
+						if (objProjectField.getFldId() == DynamicFieldConstants.STATE)
+						{
+							if (objProjectField.getFldFootnote() != null)
+							{
+								footNote = objProjectField.getFldFootnote();
+							}
+						}
+						
+						objField.setFieldOrder(objProjectField.getFldOrder());
+						objList.add(objField);
+					}
+					int intArrList[] = tmplService.fetchProjectPromoCodeAndRegistrationFlag(getprojectFieldList, template.getProjectId());
+					String htmlString = dynamicFieldService.writeHtmlFile(objList, template, session, countrySelected, hearus, footNote, intArrList);
+					requestObject.setAttribute("htmlContent", htmlString);
+				}
+				else
+				{
+					this.replaceDiv();
+				}
+			}
+			else
+			{
+				this.replaceDiv();
+			}
+			
+			
+			requestObject.setAttribute("pageId", 1);
+			Integer iPrjId = template.getProjectId();
+			System.out.println("template.getTemplateId(): " + template.getTemplateId());
+			template = tmplService.getTemplateById(template);
+			if (iPrjId != null)
+			{
+				template.setProjectId(iPrjId);
+			}
+			
+			
+			final String filename = template.getName();
+			final String strTemplatePhysicalPath = AppSystem.getConfig("app.template.physicalpath") + strFileSeperator + template.getType() + strFileSeperator + filename + ".html";
+			
+			/*
+			 * URL ebookbulk = new URL(strTemplatePath);
+			 * URLConnection ebookbulkConnection = ebookbulk.openConnection();
+			 * BufferedReader in = new BufferedReader(new InputStreamReader(ebookbulkConnection.getInputStream()));
+			 * String inputLine;
+			 * StringBuilder buildTemplate = new StringBuilder();
+			 * while ((inputLine = in.readLine()) != null)
+			 * {
+			 * buildTemplate.append(inputLine);
+			 * }
+			 */
+			
+			
+			File templateFile = new File(strTemplatePhysicalPath);
+			BufferedReader templateReader = new BufferedReader(new FileReader(templateFile));
+			String inputLine = "";
+			StringBuilder buildTemplate = new StringBuilder();
+			while ((inputLine = templateReader.readLine()) != null)
+			{
+				buildTemplate.append(inputLine);
+			}
+			templateReader.close();
+			
+			System.out.println("FileContent: " + buildTemplate.toString());
+			
+			
+			//Add Content cover book in template Page
+			
+			if (template.getProjectId() != null)
+			{
+				String newCoverBookImageFileString="";
+				contentFileList=cfService.findProjectContentFiles(template.getProjectId());
+				if(contentFileList.size()>0)
+				{
+					newCoverBookImageFileString=buildTemplate.toString();
+					int divCount=1;
+					for(ContentFile cfObj : contentFileList)
+					{
+						newCoverBookImageFileString=this.createNewCoverBookHtml(newCoverBookImageFileString, divCount, cfObj);
+						divCount++;
+					}
+					template.setFileContent(newCoverBookImageFileString);
+				}
+				else
+				{
+					template.setFileContent(buildTemplate.toString());	
+				}
+					
+			}
+			else
+			{
+				template.setFileContent(buildTemplate.toString());	
+			}
+			
+			
+			//End Add Content cover book in template Page
+			if (buildTemplate.toString().indexOf("<div id='dynamicHtml'") > 0)
+			{
+				requestObject.setAttribute("DivExist", "true");
+			}
+			else
+			{
+				requestObject.setAttribute("DivExist", "false");
+			}
+			
+			if (template.getProjectId() != null)
+			{
+				List<ProjectField> getprojectFieldList = projectFieldService.getProjectFieldByTemplateAndProjectId(template.getTemplateId(), template.getProjectId());
+				if (getprojectFieldList.size() > 0)
+				{
+					requestObject.setAttribute("dynamicHTMLClicked", "true");
+				}
+				else
+				{
+					requestObject.setAttribute("dynamicHTMLClicked", "false");
+				}
+			}
+			// Create Customer Form html iframe
+			// List<DynamicField> listDynaFields = dynamicFieldService.loadDynamicFields();
+			return SUCCESS;
+			
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			addActionError(getText("error.unexpect"));
+			
+			return INPUT;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Action(value = "templateSubmit", interceptorRefs = {@InterceptorRef("commonStack")}, results = {@Result(name = "success", type = "dispatcher", location = "/WEB-INF/view/jsp/alertrefresh.jsp"), @Result(name = "input", type = "tiles", location = "viewTemplate")})
+	// error condition do it later.
+	public String templateSubmit() throws Exception
+	{
+		try
+		{
+			int updateProjectReturn = 0;
+			final String strThumbnailPath = AppSystem.getConfig("app.template.physicalpath") + strFileSeperator + template.getType() + strFileSeperator + template.getName();
+			String fileCreatedName = "";
+			String strTemplatePath = AppSystem.getConfig("app.template.physicalpath") + strFileSeperator + AppConstants.TEMPLATE_USER;
+			User sessionUser = (User)session.get(AppConstants.USER_OBJECT);
+			File tFile;
+			
+			final boolean blnAdd = template.getType().equalsIgnoreCase(AppConstants.TEMPLATE_SYSTEM) || (actionName == 1);
+			
+			int pageId = 1;
+			if (pageId > 0)
+			{
+				pageId = ((requestObject.getParameter("pageid") != null) ? Integer.parseInt(requestObject.getParameter("pageid").toString()) : 1);
+			}
+			
+			if (blnAdd)
+			{
+				template.setCreatedBy(sessionUser.getUserName());
+				String sessionFileName = this.getDateFromTemplateName();
+				if (!sessionFileName.equals(""))
+				{
+					fileCreatedName = sessionFileName.substring(0, sessionFileName.length() - 1) + "1";
+				}
+				else
+				{
+					fileCreatedName = "template_" + new Date().getTime() + "_page1";
+				}
+				template.setName(fileCreatedName);
+			}
+			
+			
+			template.setType(AppConstants.TEMPLATE_USER);
+			template.setUpdatedBy(sessionUser.getUserName());
+			tFile = new File(strTemplatePath, template.getName() + "_error.html");
+			FileWriter write = new FileWriter(tFile);
+			if (template.getFileContent() != null)
+			{
+				if (template.getFileContent().indexOf("dynamicHtml") > 0)
+				{
+					newFileTemplateStr = this.saveSession();
+					write.write(this.replaceDynamicHtmlDiv(newFileTemplateStr, template.getFileContent(), ""));
+				}
+				else
+				{
+					write.write(template.getFileContent());
+				}
+				write.flush();
+				write.close();
+				
+				// Copy Thumbnails
+				if (blnAdd)
+				{
+					if (new File(strThumbnailPath + ".jpg").exists())
+					{
+						FileUtils.copyFile(new File(strThumbnailPath + ".jpg"), new File(strTemplatePath + strFileSeperator + template.getName() + ".jpg"));
+					}
+					if (new File(strThumbnailPath + "_error.jpg").exists())
+					{
+						FileUtils.copyFile(new File(strThumbnailPath + "_error.jpg"), new File(strTemplatePath + strFileSeperator + template.getName() + "_error.jpg"));
+					}
+				}
+			}
+			
+			int intArrList[] = (int[])session.get(PROMOREGFLAG);
+			
+			if (blnAdd)
+			{
+				
+				tmplService.addTemplate(template, (List<ProjectField>)session.get(PFLIST));
+				if (template.getProjectId() != null)
+				{
+					if (intArrList != null && intArrList.length > 0)
+						updateProjectReturn = tmplService.updateProjectPromoCodeAndRegistrationFlag(template.getProjectId(), intArrList[0], intArrList[1]);
+				}
+				addActionMessage(getText("msg.template.add.success"));
+			}
+			else
+			{
+				tmplService.updateTemplate(template, (List<ProjectField>)session.get(PFLIST));
+				if (template.getProjectId() != null)
+				{
+					if (intArrList != null && intArrList.length > 0)
+						updateProjectReturn = tmplService.updateProjectPromoCodeAndRegistrationFlag(template.getProjectId(), intArrList[0], intArrList[1]);
+				}
+				addActionMessage(getText("msg.template.update.success"));
+			}
+			session.remove(FILETEMPLATENAME);
+			session.remove(PFLIST);
+			
+			
+			// enter data in database for Project_field table for a specfic project and template
+			// if (projectFieldList != null && projectFieldList.size() > 0)
+			// {
+			// for (ProjectField objField : projectFieldList)
+			// {
+			// objField.setTemplateId(newTemplateId);
+			// }
+			// int a = projectFieldService.insertProjectFieldService(updatedprojectFieldList);
+			// System.out.println("Insert ID Project_field: " + a);
+			// }
+			/*
+			 * else
+			 * {
+			 * List<ProjectField>
+			 * getprojectFieldList=projectFieldService.getProjectFieldByTemplateAndProjectId(newTemplateId,templateObj.getProjectId());
+			 * if(getprojectFieldList.size()>0)
+			 * {
+			 * projectFieldService.deleteProjectFieldService(newTemplateId,templateObj.getProjectId());
+			 * int a = projectFieldService.insertProjectFieldService(updatedprojectFieldList);
+			 * }
+			 * }
+			 */
+			
+			return SUCCESS;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			addActionError(getText("error.unexpect"));
+			
+			return INPUT;
+		}
+	}
+	
+	@Action(value = "nextPageSubmit", interceptorRefs = {@InterceptorRef("defaultStack")}, results = {@Result(name = "success", type = "tiles", location = "viewTemplate"), @Result(name = "input", type = "tiles", location = "viewTemplate")})
+	public String nextPageSubmit() throws Exception
+	{
+		try
+		{
+			String userFileTemplateName = "";
+			String buttonClicked = "";
+			String strTemplatePath = AppSystem.getConfig("app.template.physicalpath") + strFileSeperator + AppConstants.TEMPLATE_USER;
+			File tFile;
+			final boolean blnAdd = template.getType().equalsIgnoreCase(AppConstants.TEMPLATE_SYSTEM) || (actionName == 1);
+			
+			int pageId = 1;
+			if (pageId > 0)
+			{
+				pageId = ((requestObject.getParameter("pageid") != null) ? Integer.parseInt(requestObject.getParameter("pageid").toString()) : 1);
+			}
+			
+			requestObject.setAttribute("pageId", pageId);
+			
+			int pageIdVal = 0;
+			final boolean blnBack = requestObject.getParameter("back").equalsIgnoreCase("true") ? true : false;
+			if (blnBack)
+			{
+				if (pageId + 1 == template.getPageCount())
+				{
+					String filename = session.get(FILETEMPLATENAME).toString();
+					filename = filename.substring(0, filename.length() - 1) + "1";
+					filename = filename + "_error";
+				}
+				pageIdVal = pageId + 1;
+			}
+			else
+			{
+				pageIdVal = pageId - 1;
+			}
+			String sessionFileName = this.getDateFromTemplateName();
+			if (!sessionFileName.equals(""))
+			{
+				if (blnBack)
+				{
+					if (pageId + 1 == template.getPageCount())
+					{
+						userFileTemplateName = sessionFileName.substring(0, sessionFileName.length() - 1) + "1_error";
+					}
+					else
+					{
+						userFileTemplateName = sessionFileName.substring(0, sessionFileName.length() - 1) + pageIdVal;
+					}
+				}
+				else
+				{
+					userFileTemplateName = sessionFileName.substring(0, sessionFileName.length() - 1) + pageIdVal;
+				}
+			}
+			else
+			{
+				// First Time Case
+				if (blnAdd)
+				{
+					userFileTemplateName = "template_" + new Date().getTime() + "_page1";
+				}
+				else
+				{
+					userFileTemplateName = template.getName();
+				}
+				session.put(FILETEMPLATENAME, userFileTemplateName);
+			}
+			
+			if (requestObject.getParameter("buttonClicked") != null)
+			{
+				buttonClicked = requestObject.getParameter("buttonClicked").toString();
+			}
+			if (requestObject.getParameter("refershPage") == null)
+			{
+				if (template.getFileContent() != null)
+				{
+					tFile = new File(strTemplatePath, userFileTemplateName + ".html");
+					FileWriter write = new FileWriter(tFile);
+					template.setFileContent(template.getFileContent().replaceFirst("<title></title>", "<title>" + template.getTitle() + "</title>"));
+					// Multi page link creation starts
+					if (blnAdd)
+					{
+						final String strOldLinkName = template.getName().substring(0, template.getName().length() - 1);
+						final String strNewLinkName = userFileTemplateName.substring(0, userFileTemplateName.length() - 1);
+						for (int i = 1; i < template.getPageCount(); i++)
+						{
+							template.setFileContent(template.getFileContent().replaceAll(strOldLinkName + i + ".html", strNewLinkName + i + ".html"));
+						}
+					}
+					// Multi page link creation ends
+					
+					
+					if (template.getFileContent().indexOf("id='dynamicHtml'") > 0 || template.getFileContent().indexOf("id=\"dynamicHtml\"") > 0)
+					{
+						newFileTemplateStr = this.saveSession();
+						write.write(this.replaceDynamicHtmlDiv(newFileTemplateStr, template.getFileContent(), buttonClicked));
+					}
+					else
+					{
+						write.write(template.getFileContent());
+					}
+					
+					// write.write(template.getFileContent());
+					write.flush();
+					write.close();
+					
+					this.nextPageTemplateContent(pageId);
+				}
+			}
+			else
+			{
+				String htmlContent = "";
+				htmlContent = requestObject.getParameter("htmlContent");
+				if (htmlContent == null)
+					htmlContent = "";
+				if (!htmlContent.equals(""))
+				{
+					replaceTemplateFileContent(htmlContent, template.getFileContent());
+				}
+			}
+			
+			
+			if (blnBack)
+			{
+				requestObject.setAttribute("pageCheck", "BACK");
+			}
+			else
+			{
+				requestObject.setAttribute("flagCheck", "NEXT");
+			}
+			requestObject.setAttribute("dynamicHTMLClicked", buttonClicked);
+			return SUCCESS;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			addActionError(getText("error.unexpect"));
+			
+			return INPUT;
+		}
+	}
+	
+	
+	private void nextPageTemplateContent(final int pageId) throws Exception
+	{
+		try
+		{
+			System.out.println("template.getTemplateId(): " + template.getTemplateId());
+			
+			String filename = session.get(FILETEMPLATENAME).toString();
+			if (pageId == template.getPageCount())
+			{
+				filename = filename + "_error";
+			}
+			else
+			{
+				filename = filename.substring(0, filename.length() - 1);
+				filename = filename + pageId;
+			}
+			
+			String strTemplatePath = "";
+			
+			final String strPhysicalPath = AppSystem.getConfig("app.template.physicalpath") + strFileSeperator + AppConstants.TEMPLATE_USER + strFileSeperator + filename + ".html";
+			File objFile = new File(strPhysicalPath);
+			if (objFile.exists())
+			{
+				// strTemplatePath = AppSystem.getConfig("templatePath") + strFileSeperator + AppConstants.TEMPLATE_USER;
+				strTemplatePath = AppSystem.getConfig("app.template.physicalpath") + strFileSeperator + AppConstants.TEMPLATE_USER;
+			}
+			else
+			{
+				filename = template.getName();
+				// strTemplatePath = AppSystem.getConfig("templatePath") + strFileSeperator + template.getType();
+				strTemplatePath = AppSystem.getConfig("app.template.physicalpath") + strFileSeperator + template.getType();
+				if (pageId == template.getPageCount())
+				{
+					filename = filename + "_error";
+				}
+				else
+				{
+					filename = filename.substring(0, filename.length() - 1);
+					filename = filename + pageId;
+				}
+				
+			}
+			
+			strTemplatePath += strFileSeperator + filename + ".html";
+			
+			/*
+			 * URL ebookbulk = new URL(strTemplatePath);
+			 * URLConnection ebookbulkConnection = ebookbulk.openConnection();
+			 * BufferedReader in = new BufferedReader(new InputStreamReader(ebookbulkConnection.getInputStream()));
+			 * String inputLine;
+			 * StringBuilder buildTemplate = new StringBuilder();
+			 * while ((inputLine = in.readLine()) != null)
+			 * {
+			 * buildTemplate.append(inputLine);
+			 * }
+			 */
+			
+			File templateFile = new File(strTemplatePath);
+			BufferedReader templateReader = new BufferedReader(new FileReader(templateFile));
+			String inputLine = "";
+			StringBuilder buildTemplate = new StringBuilder();
+			while ((inputLine = templateReader.readLine()) != null)
+			{
+				buildTemplate.append(inputLine);
+			}
+			templateReader.close();
+			
+			
+			System.out.println("FileContent: " + buildTemplate.toString());
+			
+			if (buildTemplate.toString().indexOf("exceptionDynamicHtml") > 0)
+			{
+				
+				if (template.getProjectId() != null)
+				{
+					exceptionMessageListObj = prjService.getExceptionMessagesByProject(template.getProjectId(), "edit");
+					
+				}
+				
+				
+				if (exceptionMessageListObj.size() > 0)
+				{
+					String newErrorString = this.replaceErrorDynamicHtmlDiv(this.getExceptionMessageString(exceptionMessageListObj), buildTemplate.toString());
+					template.setFileContent(newErrorString);
+				}
+				else
+				{
+					template.setFileContent(buildTemplate.toString());
+				}
+			}
+			else
+			{
+				template.setFileContent(buildTemplate.toString());
+			}
+			
+			
+			System.out.println("buildTemplate.toString().indexOf(===" + buildTemplate.toString().indexOf("<div id='dynamicHtml'"));
+			
+			if (buildTemplate.toString().indexOf("<div id='dynamicHtml'") > 0)
+			{
+				requestObject.setAttribute("DivExist", "true");
+			}
+			else
+			{
+				requestObject.setAttribute("DivExist", "false");
+			}
+		}
+		catch (NumberFormatException e)
+		{
+			e.printStackTrace();
+			throw e;
+		}
+		catch (DataAccessException e)
+		{
+			e.printStackTrace();
+			throw e;
+		}
+		catch (MalformedURLException e)
+		{
+			e.printStackTrace();
+			throw e;
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			throw e;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Action(value = "makeForm", interceptorRefs = {@InterceptorRef("commonStack")}, results = {@Result(name = "success", type = "tiles", location = "viewDynamicField"), @Result(name = "input", type = "redirect", location = "home.do")})
+	public String makeForm() throws Exception
+	{
+		try
+		{
+			// template = tmplService.getTemplateById(template);
+			int onceActive = 0;
+			List<ProjectField> projectFieldList = null;
+			List<ProjectField> projectFieldListDB = null;
+			List<String> fieldIdListDB = new ArrayList<String>();
+			
+			projectFieldList = (List<ProjectField>)session.get(PFLIST);
+			if (projectFieldList != null && projectFieldList.size() > 0)
+			{
+				// pick value from session
+			}
+			else
+			{
+				projectFieldList = projectFieldService.getProjectFieldByTemplateAndProjectId(template.getTemplateId(), template.getProjectId());
+				
+			}
+			if (template.getProjectId() != null)
+			{
+				project = prjService.getProjectById(template.getProjectId());
+				onceActive = project.getOnceActive();
+				
+			}
+			
+			requestObject.setAttribute("onceActiveFlag", onceActive);
+			requestObject.setAttribute("projectFieldList", projectFieldList);
+			
+			projectFieldListDB = projectFieldService.getProjectFieldByTemplateAndProjectId(template.getTemplateId(), template.getProjectId());
+			
+			if (projectFieldListDB.size() > 0)
+			{
+				for (ProjectField pfobj : projectFieldListDB)
+				{
+					fieldIdListDB.add(String.valueOf(pfobj.getFldId()));
+				}
+			}
+			requestObject.setAttribute("projectFieldListDB", fieldIdListDB);
+			
+			
+			CodeConfig configObj = promoCodeService.selectPromoCode(template.getProjectId());
+			if (configObj == null)
+			{
+				requestObject.setAttribute("promoConfigExist", "false");
+			}
+			else
+			{
+				requestObject.setAttribute("promoConfigExist", "true");
+			}
+			
+			int pageId = 1;
+			if (pageId > 0)
+			{
+				pageId = ((requestObject.getParameter("pageid") != null) ? Integer.parseInt(requestObject.getParameter("pageid").toString()) : 1);
+			}
+			
+			requestObject.setAttribute("pageId", pageId);
+			if (requestObject.getParameter("pageCheck") != null)
+			{
+				final String blnBackStr = requestObject.getParameter("pageCheck").equalsIgnoreCase("BACK") ? "back" : "next";
+				if (blnBackStr.equalsIgnoreCase("back"))
+				{
+					requestObject.setAttribute("pageCheck", "true");
+				}
+				else
+				{
+					requestObject.setAttribute("pageCheck", "false");
+				}
+				
+			}
+			
+			// this.replaceDiv_makeform();
+			
+			
+			return SUCCESS;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			log.debug(e.getMessage());
+			addActionError(getText("error.unexpect"));
+			return INPUT;
+		}
+	}
+	
+	private boolean getRegistrationHtmlForm()
+	{
+		boolean b = false;
+		List<DynamicField> listDynaFields = dynamicFieldService.loadDynamicFields();
+		b = tmplService.createRegistrationForm(listDynaFields);
+		return b;
+	}
+	
+	private String getDateFromTemplateName()
+	{
+		String name = "";
+		if (session.get(FILETEMPLATENAME) != null)
+		{
+			name = session.get(FILETEMPLATENAME).toString();
+		}
+		System.out.println("name=====" + name);
+		
+		return name;
+	}
+	
+	private String replaceDynamicHtmlDiv(String defaulttemplateStr, String fileContent, String buttonClicked) throws Exception
+	{
+		String newtext = "";
+		String newReplaceString = "";
+		try
+		{
+			
+			if (fileContent.indexOf("dynamicHtml") > 0)
+			{
+				System.out.println("fileContent:" + fileContent);
+				
+				String stringWillReplace = "";
+				if (fileContent.indexOf("<div id=\"EndDynamicHtmlDiv\"") > 0)
+				{
+					stringWillReplace = fileContent.substring(fileContent.indexOf("<div id=\"dynamicHtml\">"), fileContent.indexOf("<div id=\"EndDynamicHtmlDiv\"") - 1);
+				}
+				
+				if (buttonClicked.equalsIgnoreCase("false"))
+				{
+					newReplaceString = "<div id=\"dynamicHtml\">Dynamic Fields Not Selected</div>";
+				}
+				else
+				{
+					newReplaceString = defaulttemplateStr;
+					
+				}
+				newReplaceString = newReplaceString + "</div>";
+				newtext = fileContent.replace(stringWillReplace, newReplaceString);
+				
+				System.out.println("newtext:" + newtext);
+				
+				
+			}
+		}
+		catch (Exception ioe)
+		{
+			ioe.printStackTrace();
+			throw ioe;
+		}
+		return newtext;
+	}
+	
+	public void replaceDiv() throws Exception
+	{
+		try
+		{
+			this.saveSession();
+			System.out.println("in replaceDiv..");
+			String stringWillReplace = "";
+			String tempDyanmicHtmlString = this.saveSession();
+			System.out.println("Before Replace=" + tempDyanmicHtmlString);
+			if (session != null)
+			{
+				if (session.get(DYNAMICTEMPLATESTRING) != null && session.get(DYNAMICTEMPLATESTRING).toString().length() > 28)
+				{
+					if (tempDyanmicHtmlString.indexOf("<div id='dynamicHtml'") >= 0)
+					{
+						stringWillReplace = tempDyanmicHtmlString.substring(tempDyanmicHtmlString.indexOf("<div id='dynamicHtml'>") + 22, tempDyanmicHtmlString.lastIndexOf("</div>") - 6);
+						tempDyanmicHtmlString = tempDyanmicHtmlString.replace(stringWillReplace, "");
+						System.out.println("After Replace=" + tempDyanmicHtmlString);
+					}
+				}
+			}
+			session.put(DYNAMICTEMPLATESTRING, tempDyanmicHtmlString);
+		}
+		catch (Exception ioe)
+		{
+			ioe.printStackTrace();
+			throw ioe;
+		}
+	}
+	
+	
+	/*
+	 * public void replaceDiv_makeform() throws Exception
+	 * {
+	 * try
+	 * {
+	 * this.saveSession();
+	 * System.out.println("in replaceDiv..");
+	 * String stringWillReplace = "";
+	 * String tempDyanmicHtmlString = this.saveSession();
+	 * System.out.println("Before Replace=" + tempDyanmicHtmlString);
+	 * if (session != null)
+	 * {
+	 * if (session.get(DYNAMICTEMPLATESTRING) != null && session.get(DYNAMICTEMPLATESTRING).toString().length() > 28)
+	 * {
+	 * 
+	 * }
+	 * else
+	 * {
+	 * if (tempDyanmicHtmlString.indexOf("<div id='dynamicHtml'") >= 0)
+	 * {
+	 * if (tempDyanmicHtmlString.endsWith("</div>"))
+	 * stringWillReplace = tempDyanmicHtmlString.substring(tempDyanmicHtmlString.indexOf("<div id='dynamicHtml'>") + 22,
+	 * tempDyanmicHtmlString.lastIndexOf("</div>") - 6);
+	 * else
+	 * stringWillReplace = tempDyanmicHtmlString.substring(tempDyanmicHtmlString.indexOf("<div id='dynamicHtml'>"), tempDyanmicHtmlString.length());
+	 * 
+	 * tempDyanmicHtmlString = tempDyanmicHtmlString.replace(stringWillReplace, "");
+	 * System.out.println("After Replace=" + tempDyanmicHtmlString);
+	 * }
+	 * session.put(DYNAMICTEMPLATESTRING, tempDyanmicHtmlString);
+	 * }
+	 * }
+	 * 
+	 * }
+	 * catch (Exception ioe)
+	 * {
+	 * ioe.printStackTrace();
+	 * throw ioe;
+	 * }
+	 * }
+	 */
+	
+	private String replaceTemplateFileContent(String newfileString, String fileContent) throws Exception
+	{
+		String newtext = "";
+		try
+		{
+			newfileString = "<div id=\"dynamicHtml\">" + newfileString + "</div>";
+			System.out.println("fileContent==" + fileContent);
+			if (fileContent.indexOf("dynamicHtml") > 0)
+			{
+				System.out.println("fileContent:" + fileContent);
+				String stringWillReplace = "";
+				if (fileContent.indexOf("<div id=\"EndDynamicHtmlDiv\"") > 0)
+				{
+					stringWillReplace = fileContent.substring(fileContent.indexOf("<div id=\"dynamicHtml\">"), fileContent.indexOf("<div id=\"EndDynamicHtmlDiv\"") - 1);
+				}
+				newtext = fileContent.replace(stringWillReplace, newfileString);
+				System.out.println("newtext:" + newtext);
+				
+				template.setFileContent(newtext);
+			}
+		}
+		catch (Exception ioe)
+		{
+			ioe.printStackTrace();
+			throw ioe;
+		}
+		return newtext;
+	}
+	
+	public String saveSession()
+	{
+		if (session != null)
+		{
+			if (session.get(DYNAMICTEMPLATESTRING) == null)
+				return newFileTemplateStr;
+			else
+				newFileTemplateStr = session.get(DYNAMICTEMPLATESTRING).toString();
+		}
+		return newFileTemplateStr;
+	}
+	
+	public String getExceptionMessageString(List<ExceptionMessage> exceptionObjList)
+	{
+		String exceptionMessageString = "";
+		StringBuffer sb = new StringBuffer();
+		sb.append("<div id=\"exceptionDynamicHtml\">");
+		for (ExceptionMessage onjList : exceptionObjList)
+		{
+			sb.append("<div id=\"" + onjList.getMsgId() + "\">");
+			sb.append("<p style=\"margin-top:9px; line-height:6px;\">");
+			sb.append(onjList.getExceptionText());
+			sb.append("</p>");
+			sb.append("</div>");
+		}
+		sb.append("</div>");
+		sb.append("<script>");
+		sb.append("function getURLParameters(paramName)");
+		sb.append("{");
+		sb.append("var sURL = window.document.URL.toString();");
+		sb.append("if (sURL.indexOf(\"?\") > 0)");
+		sb.append("{");
+		sb.append("var arrParams = sURL.split(\"?\");");
+		sb.append("var arrURLParams = arrParams[1].split(\"&\");");
+		sb.append("var arrParamNames = new Array(arrURLParams.length);");
+		sb.append("var arrParamValues = new Array(arrURLParams.length);");
+		sb.append("var i = 0;");
+		sb.append("for (i=0;i<arrURLParams.length;i++)");
+		sb.append("{");
+		sb.append("var sParam =  arrURLParams[i].split(\"=\");");
+		sb.append("arrParamNames[i] = sParam[0];");
+		sb.append("if (sParam[1] != \"\")");
+		sb.append("arrParamValues[i] = unescape(sParam[1]);");
+		sb.append("else ");
+		sb.append("arrParamValues[i] = \"No Value\";");
+		sb.append("}");
+		sb.append("for (i=0;i<arrURLParams.length;i++)");
+		sb.append("{");
+		sb.append("     if(arrParamNames[i] == paramName){");
+		// alert("Param:"+arrParamValues[i]);
+		sb.append("  return arrParamValues[i];");
+		sb.append("}");
+		sb.append("}");
+		sb.append("return \"\";");
+		sb.append("}");
+		sb.append(" else ");
+		sb.append("  return \"\";");
+		sb.append("}");
+		
+		sb.append("function onloadShowErrorMessage(messageString,size)");
+		sb.append("{");
+		sb.append("var msgide=getURLParameters(messageString);");
+		sb.append("for(var j=1;j<=size;j++)");
+		sb.append("{ ");
+		sb.append("document.getElementById(j).style.display=\"none\"; ");
+		sb.append("} ");
+		sb.append("if(msgide==\"\")");
+		sb.append("{ ");
+		sb.append("msgide=\"1\";");
+		sb.append("document.getElementById(msgide).style.display=\"inline\"; ");
+		sb.append("} ");
+		sb.append("else { ");
+		sb.append("document.getElementById(msgide).style.display=\"inline\"; ");
+		sb.append("}");
+		sb.append("}");
+		sb.append("onloadShowErrorMessage('msg'," + exceptionObjList.size() + ");");
+		
+		sb.append("</script>");
+		
+		exceptionMessageString = sb.toString();
+		return exceptionMessageString;
+		
+	}
+	
+	private String replaceErrorDynamicHtmlDiv(String newReplaceString, String FileContentCoverBook) throws Exception
+	{
+		String newtext = "";
+		
+		try
+		{
+			String stringWillReplace = "";
+			
+			if (FileContentCoverBook.indexOf("<div id=\"exceptionDynamicHtml\"") > 0)
+			{
+				stringWillReplace = FileContentCoverBook.substring(FileContentCoverBook.indexOf("<div id=\"exceptionDynamicHtml\">"), FileContentCoverBook.indexOf("<div id=\"endExceptionDynamicHtml\">") - 1);
+			}
+			
+			
+			newtext = FileContentCoverBook.replace(stringWillReplace, newReplaceString);
+			
+			System.out.println("newtext:" + newtext);
+			
+			
+		}
+		catch (Exception ioe)
+		{
+			ioe.printStackTrace();
+			throw ioe;
+		}
+		return newtext;
+	}
+	
+	private String replaceCoverBookDynamicHtmlDiv(String newReplaceString, String fileContent, String startDiv, String endDiv) throws Exception
+	{
+		String newtext = "";
+		
+		try
+		{
+			String stringWillReplace = "";
+			
+			if (fileContent.indexOf("<div id=\""+startDiv+"\"") > 0)
+			{
+				stringWillReplace = fileContent.substring(fileContent.indexOf("<div id=\""+startDiv+"\""), fileContent.indexOf("<div id=\""+endDiv+"\"") - 1);
+			}
+			
+			
+			newtext = fileContent.replace(stringWillReplace, newReplaceString);
+			
+			System.out.println("newtext:" + newtext);
+			
+			
+		}
+		catch (Exception ioe)
+		{
+			ioe.printStackTrace();
+			throw ioe;
+		}
+		return newtext;
+	}
+	
+	public String getBookCoverHtmlString(ContentFile contentFileObject, String divID) throws Exception
+	{
+		String bookCoverHtmlString = "";
+		try
+		{
+			
+			String fulloverFilePath="";
+			File file=new File(coverImgaeFilePath+contentFileObject.getFileName());
+			StringBuffer sb = new StringBuffer();
+			sb.append("<div id=\""+divID+"\">");
+			sb.append("<div style=\"text-align:center\"> ");
+			if(!file.exists())
+			{
+			sb.append("<strong style=\"line-height: 164px;\">COVER IMAGE</strong></div>");
+			}
+			else
+			{
+				sb.append("<strong style=\"line-height: 164px;\"><img src=\"file:///"+coverImgaeFilePath+contentFileObject.getFileName()+"\"/></strong></div>");	
+			}
+			sb.append("<input  type=\"submit\" id=\"download\"  value=\"Download\" style=\"margin:2px 0 0 79px; padding:3px 0px;font-size:11px;color:#fff;min-width:65px;background:none;border:none; border-radius:4px; border:2px solid #dddddd; background-color:#bebebe; cursor:pointer\"/>");
+			sb.append("</div>");		
+			bookCoverHtmlString = sb.toString();
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}
+		return bookCoverHtmlString;
+		
+	}
+	
+	public String createNewCoverBookHtml(String templateFileAsString, int divCount, ContentFile cfObj) throws Exception
+	{
+		try
+		{
+			if(templateFileAsString.indexOf(AppConstants.CONTENTSTARTDYNAMICHTMLID+"_"+divCount)>0)
+			{
+				templateFileAsString = this.replaceCoverBookDynamicHtmlDiv(this.getBookCoverHtmlString(cfObj,AppConstants.CONTENTSTARTDYNAMICHTMLID+"_"+divCount), templateFileAsString, AppConstants.CONTENTSTARTDYNAMICHTMLID+"_"+divCount, AppConstants.CONTENTENDDYNAMICHTMLID+"_"+divCount);
+				
+			}
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}
+		return templateFileAsString;
+	}
+	
+}

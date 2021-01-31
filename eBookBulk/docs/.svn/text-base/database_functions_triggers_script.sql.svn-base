@@ -1,0 +1,132 @@
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `get_project_type`$$
+
+CREATE FUNCTION `get_project_type`(in_tableParameter INT) RETURNS VARCHAR(255) CHARSET utf8
+BEGIN
+	DECLARE rtrnString VARCHAR(100); 
+	IF (in_tableParameter IS NOT NULL) THEN
+		SELECT CASE 
+			WHEN in_tableParameter = 1 THEN 'SINGLE'
+			WHEN in_tableParameter = 2 THEN 'MULTIPLE'
+		END INTO rtrnString;
+	END IF;
+	IF (rtrnString IS NULL) THEN
+		SET rtrnString = '';
+	END IF;
+RETURN rtrnString;
+	
+END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `get_yes_no`$$
+
+CREATE FUNCTION `get_yes_no`(in_tableParameter INT) RETURNS VARCHAR(255) CHARSET utf8
+BEGIN
+	DECLARE rtrnString VARCHAR(100); 
+	IF (in_tableParameter IS NOT NULL ) THEN
+		SELECT CASE 
+			WHEN in_tableParameter = 1 THEN 'YES'
+			WHEN in_tableParameter = 0 THEN 'NO'
+		END INTO rtrnString;
+	END IF;
+	IF (rtrnString IS NULL) THEN
+		SET rtrnString = '';
+	END IF;
+	RETURN rtrnString;
+END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `get_project_status`$$
+
+CREATE FUNCTION `get_project_status`(in_tableParameter INT) RETURNS VARCHAR(255) CHARSET utf8
+BEGIN
+	DECLARE rtrnString VARCHAR(100); 
+	IF (in_tableParameter IS NOT NULL) THEN
+		SELECT CASE 
+			WHEN in_tableParameter = 1 THEN 'PENDING'
+			WHEN in_tableParameter = 2 THEN 'ACTIVE'
+			WHEN in_tableParameter = 3 THEN 'INACTIVE'
+			WHEN in_tableParameter = 4 THEN 'DELETED'
+		END INTO rtrnString;
+	END IF;
+	IF (rtrnString IS NULL) THEN
+		SET rtrnString = '';
+	END IF;
+RETURN rtrnString;
+	
+END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+DROP TRIGGER `trigger_update_project_dates`$$
+
+CREATE TRIGGER `trigger_update_project_dates` BEFORE UPDATE ON `PROJECT` 
+    FOR EACH ROW BEGIN
+	    IF new.AVAILABLE_DATE <> old.AVAILABLE_DATE  THEN 
+		    INSERT INTO PROJECT_HISTORY(PROJECT_ID,FIELD_NAME,PREV_VALUE,CURR_VALUE,NOTIFICATION,CREATED_BY,CREATED_DATE) 
+		    VALUES (new.PROJECT_ID,'AVAILABLE_DATE',DATE_FORMAT(old.AVAILABLE_DATE,'%d-%b-%Y %T'),DATE_FORMAT(new.AVAILABLE_DATE,'%d-%b-%Y %T'),1,new.UPDATED_BY,new.UPDATED_DATE);
+	    END IF;
+	    IF new.EXPIRY_DATE <> old.EXPIRY_DATE  THEN 
+		    INSERT INTO PROJECT_HISTORY(PROJECT_ID,FIELD_NAME,PREV_VALUE,CURR_VALUE,NOTIFICATION,CREATED_BY,CREATED_DATE) 
+		    VALUES (new.PROJECT_ID,'EXPIRY_DATE',DATE_FORMAT(old.EXPIRY_DATE,'%d-%b-%Y %T'),DATE_FORMAT(new.EXPIRY_DATE,'%d-%b-%Y %T'),1,new.UPDATED_BY,new.UPDATED_DATE);
+	    END IF;
+	    IF new.SOLD_QTY <> old.SOLD_QTY  THEN 
+		    INSERT INTO PROJECT_HISTORY(PROJECT_ID,FIELD_NAME,PREV_VALUE,CURR_VALUE,NOTIFICATION,CREATED_BY,CREATED_DATE) 
+		    VALUES (new.PROJECT_ID,'SOLD_QTY',old.SOLD_QTY,new.SOLD_QTY,1,new.UPDATED_BY,new.UPDATED_DATE);
+	    END IF;
+	    IF new.BACKUP_QTY <> old.BACKUP_QTY  THEN 
+		    INSERT INTO PROJECT_HISTORY(PROJECT_ID,FIELD_NAME,PREV_VALUE,CURR_VALUE,NOTIFICATION,CREATED_BY,CREATED_DATE) 
+		    VALUES (new.PROJECT_ID,'BACKUP_QTY',old.BACKUP_QTY,new.BACKUP_QTY,1,new.UPDATED_BY,new.UPDATED_DATE);
+	    END IF;
+	    IF new.PROJECT_STATUS <> old.PROJECT_STATUS  THEN 
+		    INSERT INTO PROJECT_HISTORY(PROJECT_ID,FIELD_NAME,PREV_VALUE,CURR_VALUE,NOTIFICATION,CREATED_BY,CREATED_DATE) 
+		    VALUES (new.PROJECT_ID,'PROJECT_STATUS',old.PROJECT_STATUS,new.PROJECT_STATUS,1,new.UPDATED_BY,new.UPDATED_DATE);
+	    END IF;
+    END$$
+
+DELIMITER ;
+
+----------------------------- Reviewed ---------------------
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `get_promo_code`$$
+
+CREATE FUNCTION `get_promo_code`( projectId INT ) RETURNS VARCHAR(255) CHARSET utf8
+BEGIN
+    DECLARE promocode VARCHAR(160)  ;
+    SELECT CODE_TYPE INTO promocode FROM promo_code_values WHERE PROJECT_ID=projectId; 
+    RETURN promocode;
+    END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS `get_country_name`$$
+
+CREATE   FUNCTION `get_country_name`(countryid INT) RETURNS VARCHAR(255) CHARSET utf8
+BEGIN
+    DECLARE countryname VARCHAR(460);
+    SELECT COUNTRY_NAME INTO countryname FROM country WHERE COUNTRY_ID=countryid; 
+    RETURN countryname;
+    END$$
+
+DELIMITER ;

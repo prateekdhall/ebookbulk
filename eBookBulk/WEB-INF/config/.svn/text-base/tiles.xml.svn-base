@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<definition name="baseLayout" template="/WEB-INF/view/layouts/baselayout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/view/layouts/header.jsp" />		
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/view/layouts/footer.jsp" />
+	</definition>
+
+	<definition name="divLayout" template="/WEB-INF/view/layouts/divlayout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="body" value="" />
+	</definition>
+
+	<definition name="home" extends="baseLayout">
+		<put-attribute name="title" value="Bulk EBook Home" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/home.jsp" />
+	</definition>
+
+	<definition name="notfound" extends="baseLayout">
+		<put-attribute name="title" value="Under Construction" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/notfound.html" />
+	</definition>
+	
+	<definition name="changePassword" extends="baseLayout">
+		<put-attribute name="title" value="Change Password" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/changepassword.jsp" />
+	</definition>
+	
+	<definition name="createUser" extends="baseLayout">
+		<put-attribute name="title" value="Create User Account" />
+		<put-attribute name="body" value=".createUser" />
+	</definition>
+	
+	<definition name=".createUser" template="/WEB-INF/view/jsp/createUser.jsp">
+		<put-attribute name="elements" value="/WEB-INF/view/jsp/user.jsp" />
+	</definition>
+	
+	<definition name="myAccount" extends="baseLayout">
+		<put-attribute name="title" value="My Account" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/myAccount.jsp" />
+	</definition>
+	
+	<definition name="searchUser" extends="baseLayout">
+		<put-attribute name="title" value="Search User" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/searchAdminUser.jsp" />
+	</definition>
+	
+	<definition name="updateUser" extends="baseLayout">
+		<put-attribute name="title" value="Update User" />
+		<put-attribute name="body" value=".updateUser" />
+	</definition>
+
+	<definition name=".updateUser" template="/WEB-INF/view/jsp/updateUser.jsp">
+		<put-attribute name="elements" value="/WEB-INF/view/jsp/user.jsp" />
+	</definition>
+
+	<definition name="searchCustomer" extends="divLayout">
+		<put-attribute name="title" value="Search Customer" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/customer/searchCustomer.jsp" />
+	</definition>	
+	
+	<definition name="createCustomer" extends="divLayout">
+		<put-attribute name="title" value="Create Customer" />
+		<put-attribute name="body" value=".createCustomer" />
+	</definition>
+	
+	<definition name=".createCustomer" template="/WEB-INF/view/jsp/customer/createCustomer.jsp">
+		<put-attribute name="elements" value="/WEB-INF/view/jsp/customer/customer.jsp" />
+		<put-attribute name="grid" value="/WEB-INF/view/jsp/customer/customerGrid.jsp" />
+	</definition>
+
+	<definition name="viewCustomer" extends="divLayout">
+		<put-attribute name="title" value="Update Customer" />
+		<put-attribute name="body" value=".viewCustomer" />
+	</definition>
+	
+	<definition name=".viewCustomer" template="/WEB-INF/view/jsp/customer/updateCustomer.jsp">
+		<put-attribute name="elements" value="/WEB-INF/view/jsp/customer/customer.jsp" />
+		<put-attribute name="grid" value="/WEB-INF/view/jsp/customer/customerGrid.jsp" />
+	</definition>
+
+	<definition name="createProject" extends="baseLayout">
+		<put-attribute name="title" value="Create Project" />
+		<put-attribute name="body" value=".createProjectElement" />
+	</definition>
+
+	<definition name=".createProjectElement" template="/WEB-INF/view/jsp/project/add.jsp">
+		<put-attribute name="elements" value="/WEB-INF/view/jsp/project/elements.jsp" />
+	</definition>
+	
+	<definition name="copyCriteriaProject" extends="divLayout">
+		<put-attribute name="title" value="Copy Project" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/project/copyproject.jsp" />
+	</definition>	
+
+	<definition name="updateProject" extends="baseLayout">
+		<put-attribute name="title" value="Update Project" />
+		<put-attribute name="body" value=".updateProjectElement" />
+	</definition>
+
+	<definition name=".updateProjectElement" template="/WEB-INF/view/jsp/project/edit.jsp">
+		<put-attribute name="elements" value="/WEB-INF/view/jsp/project/elements.jsp" />
+	</definition>
+	
+	<definition name="searchProject" extends="baseLayout">
+		<put-attribute name="title" value="Search Project" />		
+		<put-attribute name="body" value="/WEB-INF/view/jsp/project/searchProject.jsp" />
+	</definition>
+	
+	<definition name="myProject" extends="baseLayout">
+		<put-attribute name="title" value="My Projects" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/project/myProject.jsp" />
+	</definition>
+	
+	<definition name="drmDefine" extends="divLayout">
+		<put-attribute name="title" value="DRM Configuration" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/project/drmconfig.jsp" />
+	</definition>
+	
+	<definition name="template" extends="baseLayout">
+		<put-attribute name="title" value="Create/Update Template" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/template/main.jsp" />
+	</definition>
+	
+	<definition name="templateDiv" extends="divLayout">
+		<put-attribute name="title" value="Create/Update Template" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/template/divmain.jsp" />
+	</definition>
+	
+	<definition name="viewTemplate" extends="divLayout">
+		<put-attribute name="title" value="Create/Update Template" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/template/view.jsp" />
+	</definition>
+	
+	<definition name="promoCode" extends="divLayout">
+		<put-attribute name="body" value="/WEB-INF/view/jsp/promocode/add.jsp" />
+	</definition>
+	
+	<definition name="updatePromocode" extends="divLayout">
+		<put-attribute name="body" value="/WEB-INF/view/jsp/promocode/edit.jsp" />
+	</definition>
+	
+	<definition name="emailTemplate" extends="divLayout">
+		<put-attribute name="title" value="Send Email" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/promocode/email.jsp" />
+	</definition>
+	
+	<definition name="viewDynamicField" extends="divLayout">
+		<put-attribute name="title" value="Dynamic Form Fields" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/dynamicFields.jsp" />
+	</definition>
+	
+	<definition name="projectDetailsReport" extends="baseLayout">
+		<put-attribute name="title" value="Project Details Report" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/reports/projectDetailsReport_criteria.jsp" />
+	</definition>
+	
+	<definition name="projectOverviewReport" extends="baseLayout">
+		<put-attribute name="title" value="Project Overview Report" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/reports/projectOverviewReport_criteria.jsp" />
+	</definition>
+		
+	<definition name="projectActivityReport" extends="baseLayout">
+		<put-attribute name="title" value="Project Activity Report" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/reports/projectActivityReport_criteria.jsp" />
+	</definition>
+	
+	<definition name="customerProjectActivityReport" extends="baseLayout">
+		<put-attribute name="title" value="Customer - Project Activity Report" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/reports/customerprojectactivityreportcriteria.jsp" />
+	</definition>
+	<definition name="customerProjectOverviewReport" extends="baseLayout">
+		<put-attribute name="title" value="Customer - Project Overview Report" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/reports/customerprojectoverviewreportcritera.jsp" />
+	</definition>
+	
+	
+	<definition name="viewApplet" extends="divLayout">
+		<put-attribute name="title" value="Applet" />
+		<put-attribute name="body" value="/applet/fileUpload.jsp" />
+	</definition>
+	
+	<definition name="afterApplet" extends="divLayout">
+		<put-attribute name="title" value="After Upload" />
+		<put-attribute name="body" value="/applet/afterUpload.jsp" />
+	</definition>
+	
+	<definition name="projectHistoryReport" extends="baseLayout">
+		<put-attribute name="title" value="Project History Report" />
+		<put-attribute name="body" value="/WEB-INF/view/jsp/reports/projectHistoryReport_criteria.jsp" />
+	</definition>
+</tiles-definitions>

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/projects/!svn/ver/73783/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/reportsBean
+END
+MyProjectReportDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/projects/!svn/ver/73705/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/reportsBean/MyProjectReportDto.java
+END
+ProjectActivityReport.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/projects/!svn/ver/73737/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/reportsBean/ProjectActivityReport.java
+END
+CustomerProjectActivityReport.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/projects/!svn/ver/73746/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/reportsBean/CustomerProjectActivityReport.java
+END
+ProjectHistoryReport.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/projects/!svn/ver/73783/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/reportsBean/ProjectHistoryReport.java
+END
+ReportCriteriaBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/projects/!svn/ver/73715/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/reportsBean/ReportCriteriaBean.java
+END
+ProjectDetailsReport.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/projects/!svn/ver/73729/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/reportsBean/ProjectDetailsReport.java
+END
+ProjectOverviewReport.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/projects/!svn/ver/73776/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/reportsBean/ProjectOverviewReport.java
+END
+CustomerProjectOverviewReport.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/projects/!svn/ver/73731/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/reportsBean/CustomerProjectOverviewReport.java
+END

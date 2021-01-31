@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ADE Store Page with Detection</title>
+</head>
+
+<script type="text/javascript" src="swfobject.js"></script>
+<script language="javascript" src="DigitalEditionsDetection.js" type="text/javascript"></script>
+<script language="javascript" src="ADEBadgeLauncher.js" type="text/javascript"></script>
+<script language="javascript" src="test_DigitalEditionsDetection.js" type="text/javascript"></script>
+
+<script language="javascript">
+<!--
+/*************************************************************
+ *
+ * ADOBE SYSTEMS INCORPORATED
+ * Copyright 2006-2009 Adobe Systems Incorporated
+ * All Rights Reserved
+ *
+ * NOTICE: Adobe permits you to use, modify, and distribute
+ * this file in accordance with the terms of the Adobe license
+ * agreement accompanying it. If you have received this file
+ * from a source other than Adobe, then your use, modification,
+ * or distribution of it requires the prior written permission
+ * of Adobe.
+ *
+ *************************************************************/
+
+// ********************
+//	ade_detect_divlayers.htm
+//
+//	This is the example code to show a "detection" example for the complete environment
+//  to operate Adobe Digital Editions.  The HTML page uses DIV layers that become
+//  activated depending on the state of the detection.  It uses the open source SWFobject
+//  to help perform the basic flash detection.  It uses a helper test_DigitalEditionsDetection.js
+//  to toggle the state with a control to view and test the detection results
+//
+//  NOTE: This code and the sample code should be used from a web browser for
+//  true test of the environment.  Opening the sample HTML files directly from the
+//  file system may produce un-desirable results due to the flash security model
+//  To ensure good test results, place the sample code all in a single folder then expose
+//  that folder as a virtual directory from your favorite web server.
+// ********************
+
+//-----------------------------------------------------------------------------
+//  Maintenance Log:
+//  
+//  04/17/2008	the (3) buttonLabel params were removed
+//				buttonLabelNotRequirements, buttonLabelNot, buttonLabelInst
+//  04/03/2008  Adjust buttonLabel settings to use internal defaults in some cases
+//  04/01/2008	1.2	Update comments, URL for images
+//  01/23/2008	update to use sendSWFVersion and sendButtonPush
+//				add stubs ShowSWFVersion_DivLayer(), ADE_SWF_ButtonPush_action()
+//-----------------------------------------------------------------------------
+
+// Global variable to provide a local redirection URL in case
+// there is no FLASH detected by this system.  This URL is launched if the
+// SWF displays but has internally detected bad flash
+// The URL can be null.  If that is the case, the code at
+// ADEBadgeLauncherInstance() will substitute the current window's location
+// with url parameters ?flash=bad added.
+// please adjust the code there if needed ADEBadgeLauncher.js 
+var G_badFlashRedirectURL = "http://my.domain.com/needflash";  // null; // can be null
+
+// can test autoInstall or autoLaunch by hardcoding one of these true at a time
+var G_autoInstall = false;	// TEST/DEMONSTRATION MODE ONLY
+var G_autoLaunch = false;	// TEST/DEMONSTRATION MODE ONLY
+
+var GD_at_doOnLoad = 0;
+var	GD_at_onShowADE_ShowContentDiv = 0;
+
+// ********************
+// Stub function provided to support operation for SWF Version
+// This is called when sendSWFVersion = "true"
+// and the script at setG_strSWFVersion() detects a fresh string
+// ********************
+function ShowSWFVersion_DivLayer()
+{
+	// We dont have a DIV for the version, so we do nothing here
+	return;
+}
+
+// ********************
+// Stub function provided to support send_ADE_SWF_ButtonPush()
+// That anchor function will call the stub
+// This way, the anchor function is always defined, and various
+// implementations can provide the stub where needed
+// ********************
+function ADE_SWF_ButtonPush_action()
+{
+	// Copy and enable this function into your
+	// implementations where sendButtonPush = "true"
+	
+	//  NOTE: When sendButtonPush = "true", then even if contentURL is set, it will not
+	//  be sent to ADE after it is launched.  When sendButtonPush = "true", all that happens
+	//  after ADE is launched is that the JS Callback is made, and that is it.
+	
+	// We dont do this, but stub is provided anyway
+	return;
+}
+
+
+
+function doOnLoad()
+{
+	GD_at_doOnLoad++;
+
+	// Eliminate Conflicts. Only one, please
+	if (G_autoInstall && G_autoLaunch)
+	{
+		G_autoLaunch = false;
+	}
+	
+	if (G_autoInstall || G_autoLaunch)
+	{
+		// can un-comment this to force the deconcept SWFObject DIV
+		// to be in use because we simulate NOT INSTALLED
+		G_bForce_nADEInstalled_zero = true;
+	}
+
+	// let the function in DigitalEditionsDetection.js take control
+	// This will run a special instance of the launcher SWF with the
+	// deconcept SWFObject, to perform basic flash detection.
+	// Additionally, if ADE is installed, then it will callback here to onShowADE_ShowContentDiv()
+	//
+	// Pass in badFlashRedirectURL to setup the our SWF held by deconcept SWFObject
+	
+	ADE_Detect_doOnLoad(G_badFlashRedirectURL, G_autoInstall, G_autoLaunch);
+}
+
+// ********************
+// onShowADE_ShowContentDiv
+// Do dynamic layout
+//
+// This is called from DigitalEditionsDetection.js when it is detected that
+// Ditigal Editions is installed.  If it is not installed, then any of the 
+// 3 alternate div layers will be activated, depending on the state
+//
+// div ADE_UnsupportedOSDiv is shown if Unsupported operating system is detected 
+// div ADE_NeedFlashDiv is shown if basic Flash is not detected
+// div ADE_DetectAndInstallDiv is placeholder for ADE launcher SWF, using deconcept flash detection.
+// This object does reliable flash detection to ensure the ade_web_library.swf can load -->
+// 
+// ********************
+function onShowADE_ShowContentDiv()
+{
+	GD_at_onShowADE_ShowContentDiv++;
+
+	// Please reference ADEBadgeLauncher.js for full documentation
+	
+	//  HTML Section params:
+	//  =========================
+	// HTMLdivID - id of the <div> which will hold the SWF
+	// HTMLobjectID - desired ID for the HTML <object> that contains the SWF (may be null - default is ADEBadgeLauncherInstance)
+	
+	//  Flash SWF parameters:
+	//  =========================
+	//	contentURL - (string) 
+	//  URL to the PDF or ePub content which DE will download, 
+	//  or DRM fulfillment URL (see doFulfillmentLink)
+	//  The URL must be escaped (js escape() function) to retain its integrity
+	//
+	//  ------------------------------
+	//  doFulfillmentLink - (true, false)
+	//  true - submit "contentURL" parameter into browser (for DRM fulfillment URL)
+	//  false - pass "contentURL" through LocalConnection into DE. DE will download the 
+	//  content and open
+	
+	//  ========================================================================
+	//  HTML Section params:
+	//  =========================
+	var HTMLdivID = "ADE_SCD_001"; 
+	var HTMLobjectID = "tl_001";
+	
+	//  Flash SWF parameters:
+	//  =========================
+	var contentURL = "http://ebookfulfill.adobe.com/fulfill/ebx.etd?action=free&ordersource=adbestor&bookid=ISBN:1930161069";
+	var autoInstall = G_autoInstall; 
+	var autoLaunch = G_autoLaunch;
+//	var badFlashRedirectURL	= null; // USING GLOBAL G_badFlashRedirectURL
+
+	var doFulfillmentLink = true;	// NEEDED for ACS GBlink fulfillment
+	var sendADEInstalled = false;
+	var sendSWFVersion = false;
+	var sendButtonPush = false;  // if true, only call the JS function - contentURL would be ignored if used
+	
+	// must ESCAPE the URL
+	var escapedContentURL = escape(contentURL);
+
+	// REMINDER: Server-side GBLink URL need this as well
+	// escapedContentURL = fix_gblink_plus_characters(escapedContentURL);
+	
+	ADEBadgeLauncherInstance(HTMLdivID, HTMLobjectID, escapedContentURL, doFulfillmentLink, autoInstall, autoLaunch, G_badFlashRedirectURL, sendADEInstalled, sendSWFVersion, sendButtonPush);
+	
+	// CHECK OUT IF TEST MODE OR NOT
+	// Deny more button for auto* modes, since that does not make
+	// sense to have multiple controls doing auto functions
+	var bDoMoreDIVS = true;
+	if (G_autoInstall || G_autoLaunch)
+	{
+		bDoMoreDIVS = false;
+	}
+	
+	//  ========================================================================
+	//  HTML Section params:
+	//  =========================
+	HTMLdivID = "ADE_SCD_002"; 
+	HTMLobjectID = "tl_002";
+	
+	if (bDoMoreDIVS)
+	{
+		//  Flash SWF parameters:
+		//  =========================
+		contentURL = "http://divpi.adobe.com/content/DeathAndTheSenator.epub";
+		doFulfillmentLink = false;	// NOT SET for direct ePub or un-encrypted PDF Download
+		// must ESCAPE the URL
+		escapedContentURL = escape(contentURL);
+		ADEBadgeLauncherInstance(HTMLdivID, HTMLobjectID, escapedContentURL, doFulfillmentLink, autoInstall, autoLaunch, G_badFlashRedirectURL, sendADEInstalled, sendSWFVersion, sendButtonPush);
+	}
+	else	// disblaed for test
+	{
+		document.getElementById(HTMLdivID).innerHTML = "NO SWF here - auto* param mode";
+	}
+
+	//  ========================================================================
+	//  HTML Section params:
+	//  =========================
+	HTMLdivID = "ADE_SCD_003"; 
+	HTMLobjectID = "tl_003";
+	
+	if (bDoMoreDIVS)
+	{
+		
+		//  Flash SWF parameters:
+		//  =========================
+		contentURL = "http://divpi.adobe.com/content/Dracula.pdf";
+		doFulfillmentLink = false;	// NOT SET for direct ePub or un-encrypted PDF Download
+		// must ESCAPE the URL
+		escapedContentURL = escape(contentURL);
+		ADEBadgeLauncherInstance(HTMLdivID, HTMLobjectID, escapedContentURL, doFulfillmentLink, autoInstall, autoLaunch, G_badFlashRedirectURL, sendADEInstalled, sendSWFVersion, sendButtonPush);
+	}
+	else	// disblaed for test
+	{
+		document.getElementById(HTMLdivID).innerHTML = "NO SWF here - auto* param mode";
+	}
+}
+
+//-->
+</script>
+
+<body onLoad="doOnLoad();">
+<hr/>
+<!-- ADE div layers in support of DigitalEditionsdetection.js -->
+<!-- div ADE_UnsupportedOSDiv is shown if Unsupported operating system is detected -->
+<div id="ADE_UnsupportedOSDiv">Digital Editions is not supported on the Linux platform at the present.  Please check again soon.
+</div> 
+<!-- div ADE_NeedFlashDiv is shown if basic Flash is not detected -->
+<div id="ADE_NeedFlashDiv">Please install Adobe Flash Player before proceeding<br/><br/>
+This DIV could have the same redirect URL as Script variable G_badFlashRedirectURL<br/>
+That page would contain the message to Install the Flash Player and provide the Adobe Link<br/>
+<a href="http://www.adobe.com/go/getflashplayer">Get Adobe Flash Player</a>
+</div>
+<!-- div ADE_DetectAndInstallDiv is placeholder for ADE launcher SWF, using deconcept flash detection. -->
+<!-- This object does reliable flash detection to ensure the ade_web_library.swf can load -->
+<div id="ADE_DetectAndInstallDiv">Placeholder div for Digital Editions launcher
+</div>
+<!-- div ADE_ShowContentDiv is active content div when ADE is installed -->
+<div id="ADE_ShowContentDiv">This is the bookstore layer<br/><br/>
+
+<!-- NESTED div ADE_SCD_001 Inside ADE_ShowContentDiv -->
+<hr/>
+<img src="http://ebookfulfill.adobe.com/thumbnails/ISBN_1930161069_Thumbnail.gif" width="100" height="150" alt="ISBN_1930161069_Thumbnail.gif">
+<br/>
+Adobe Content Server download with GBLink URL (actually static action=free URL) <br/><br/>
+Memoirs of Sherlock Holmes<br/>
+<!-- Download "button" - really a swf -->
+<div id="ADE_SCD_001"></div>	
+
+<!-- NESTED div ADE_SCD_002 Inside ADE_ShowContentDiv -->
+<hr/>
+<img src="http://ebookfulfill.adobe.com/thumbnails/epub/DeathAndTheSenator_coverpg.jpg" width="100" height="150" alt="DeathAndTheSenator_coverpg.jpg">
+<br/>
+XHTML (ePub) direct download <br/><br/>
+Death and the Senator<br/>
+<div id="ADE_SCD_002"></div>	
+
+<!-- NESTED div ADE_SCD_003 Inside ADE_ShowContentDiv -->
+<hr/>
+<img src="http://ebookfulfill.adobe.com/thumbnails/ISBN_193016100X_Thumbnail.gif" width="100" height="150" alt="ISBN_1930161069_Thumbnail.gif">
+<br/>
+PDF (no DRM) direct download <br/><br/>
+Dracula<br/>
+<!-- Download "button" - really a swf -->
+<div id="ADE_SCD_003"></div>	
+
+</div>  <!-- END OF div ADE_ShowContentDiv -->
+
+<!-- THERE IS CODE IN DigitalEditionsDetection.js to dump into this -->
+<!-- Un-comment to use -->
+<!--
+<hr/>
+DEBUGGING DIV <br/><br/>
+<div id="ADE_DebugDiv"></div>
+-->
+
+<!-- START ADE_TestDetectionForm form for testing with test_DigitalEditionsDetection.js -->
+<hr/>
+<form name="ADE_TestDetectionForm" method="POST" ID="Form1">
+  <p>
+  <center>
+  <b><font color="#0099CC">ADE test Detection Controller<br/></font></b>
+  <input type="button" value="Toggle Platform" name="Plat" id="Button1" onclick="TPlat()">
+  <input type="button" value="Toggle Flash" name="Flash" id="Button2" onclick="TFlash()">
+  <input type="button" value="Toggle ADE" name="ADE" id="Button3"  onclick="TADE()">
+  &nbsp;<br/>
+  Form Data: 
+  <input type="text" name="Data" size="70" value="UN-INITIALIZED ???" id="Text1"> 
+  </center>
+  </p>
+  <p>&nbsp;</p>
+</form>
+<hr/>
+<!-- END controller form for testing with test_DigitalEditionsDetection.js -->
+
+</body>
+</html>

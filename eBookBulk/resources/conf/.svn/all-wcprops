@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/projects/!svn/ver/72895/Wiley/trunk/Projects/eBookBulk/resources/conf
+END
+database.properties
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/projects/!svn/ver/71481/Wiley/trunk/Projects/eBookBulk/resources/conf/database.properties
+END
+log4j-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/projects/!svn/ver/71771/Wiley/trunk/Projects/eBookBulk/resources/conf/log4j-config.xml
+END
+mail.properties
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/projects/!svn/ver/73251/Wiley/trunk/Projects/eBookBulk/resources/conf/mail.properties
+END
+application.properties
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/projects/!svn/ver/73416/Wiley/trunk/Projects/eBookBulk/resources/conf/application.properties
+END

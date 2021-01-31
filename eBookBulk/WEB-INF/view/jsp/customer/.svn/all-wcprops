@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/projects/!svn/ver/73402/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/customer
+END
+updateCustomer.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/projects/!svn/ver/73089/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/customer/updateCustomer.jsp
+END
+createCustomer.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/projects/!svn/ver/73089/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/customer/createCustomer.jsp
+END
+customerGrid.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/projects/!svn/ver/73326/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/customer/customerGrid.jsp
+END
+searchCustomer.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/projects/!svn/ver/73314/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/customer/searchCustomer.jsp
+END
+customer.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/projects/!svn/ver/73402/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/customer/customer.jsp
+END

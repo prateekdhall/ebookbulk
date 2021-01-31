@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>ADE Launcher Example with AdeptLink Form</title>
+</head>
+
+<script language="javascript" src="ADEBadgeLauncher.js" type="text/javascript"></script>
+
+<script language="javascript">
+<!--
+/*************************************************************
+ *
+ * ADOBE SYSTEMS INCORPORATED
+ * Copyright 2006-2009 Adobe Systems Incorporated
+ * All Rights Reserved
+ *
+ * NOTICE: Adobe permits you to use, modify, and distribute
+ * this file in accordance with the terms of the Adobe license
+ * agreement accompanying it. If you have received this file
+ * from a source other than Adobe, then your use, modification,
+ * or distribution of it requires the prior written permission
+ * of Adobe.
+ *
+ *************************************************************/
+
+// ********************
+//	adeptlink_example.htm
+//
+//  This sample shows use of the sendButtonPush="true" usage so that the 
+//  SWF will signal the JS.  We have a simulated final AdeptLink HTML form here
+//  that is then submitted when the SWF signals the JS that button was pushed.
+//
+//  NOTE: This code and the sample code should be used from a web browser for
+//  true test of the environment.  Opening the sample HTML files directly from the
+//  file system may produce un-desirable results due to the flash security model
+//  To ensure good test results, place the sample code all in a single folder then expose
+//  that folder as a virtual directory from your favorite web server.
+// ********************
+
+//-----------------------------------------------------------------------------
+//  Maintenance Log:
+//  
+//  04/18/2008  Adjust example to use ADEBadgeLauncherInstance() instead of ADEBadgeInstallerInstance()
+//				this lets us send a junk contentURL and thus the Badge will display "Download Item" rather than "Launch"
+//				contentURL is ignored when sendButtonPush = true.
+//  04/17/2008	the (3) buttonLabel params were removed
+//				buttonLabelNotRequirements, buttonLabelNot, buttonLabelInst
+//			    remove the commented launcherDivLayer2 in this example.  Not relevant.
+//  04/03/2008  Adjust buttonLabel settings to use internal defaults in some cases
+//  01/23/2008 Initial Version
+//-----------------------------------------------------------------------------
+
+// set URL for local test server.  ensure trailing slash
+// Code below adds:  "adeptlink_error.htm"
+var G_test_webserver_baseURL = "http://demobulksales.mpstechnologies.com/ade_launch/ade_web_library/badge/"; 
+
+// ********************
+// Stub function provided to support operation
+// independent of DigitalEditionsDetection.js
+// ********************
+function ShowADE_DivLayer()
+{
+	// This example does not use DigitalEditionsDetection.js
+	// Therefore this stub is needed
+	return;
+}
+
+// ********************
+// Stub function provided to support operation for SWF Version
+// This is called when sendSWFVersion = "true"
+// and the script at setG_strSWFVersion() detects a fresh string
+// ********************
+function ShowSWFVersion_DivLayer()
+{
+//********** CAN USE THIS IF YOU WANT to sendSWFVersion = "true" ************
+	// We do the version in this example therefore this is needed
+	if (G_bUpdateSWFVersion)
+	{
+		G_bUpdateSWFVersion = false;
+		var element = document.getElementById("swfVersionDiv");
+	
+		if (G_strSWFVersion.length > 0)
+		{
+			element.innerHTML = "<hr/>Adobe Digital Editions SWF Version:<br/><br/>" + G_strSWFVersion;
+			// kick in the pants to be sure to display
+			element.style.display = "block";
+		}
+		else
+		{
+			element.style.display = "none";
+		}
+	}
+//********** CAN USE THIS IF YOU WANT to sendSWFVersion = "true" ************/
+	return;
+}
+
+// ********************
+// Stub function provided to support send_ADE_SWF_ButtonPush()
+// That anchor function will call the stub
+// This way, the anchor function is always defined, and various
+// implementations can provide the stub where needed
+// ********************
+function ADE_SWF_ButtonPush_action()
+{
+	// Copy and enable this function into your
+	// implementations where sendButtonPush = "true"
+	
+	//  NOTE: When sendButtonPush = "true", then even if contentURL is set, it will not
+	//  be sent to ADE after it is launched.  When sendButtonPush = "true", all that happens
+	//  after ADE is launched is that the JS Callback is made, and that is it.
+	
+	// We do this, so here is the implementation
+	// Sanity Test to get going.  This will work if you are displaying the version
+	// setG_strSWFVersion("BUTTON HIT");
+	
+	document.FormAdeptLink.submit();
+	
+	return;
+}
+
+
+function doOnLoad()
+{
+	// SET THE ADEPT FORM WITH LOCAL RETURN URL for TESTING
+	var strURL = (G_test_webserver_baseURL + "adeptlink_error.htm");
+	document.FormAdeptLink.ErrorPageURL.value = strURL;
+
+	// Please reference ADEBadgeLauncher.js for full documentation
+	
+	//  HTML Section params:
+	//  =========================
+	// HTMLdivID - id of the <div> which will hold the SWF
+	// HTMLobjectID - desired ID for the HTML <object> that contains the SWF (may be null - default is ADEBadgeLauncherInstance)
+	
+	
+	// *******************************
+	// FOR launcherDivLayer1
+	// *******************************
+	
+	//  HTML Section params:
+	//  =========================
+	var HTMLdivID = "launcherDivLayer1"; 
+	var HTMLobjectID = "ADEBadgeLauncherInstance1";
+	
+	//  Flash SWF parameters:
+	//  =========================
+	var doFulfillmentLink = false;
+	var autoInstall = false; 
+	var autoLaunch = false;
+	var badFlashRedirectURL	= null; // "http://my.domain.com/flashhelp";  // null; // can be null
+	var sendADEInstalled = false;
+	
+	var sendSWFVersion = true;
+	
+	var sendButtonPush = true;  // if true, only call the JS function - contentURL would be ignored if used
+	var contentURL = "junk";	// Ignored here because of sendButtonPush = true.  But This gives button state of "Download Item"
+	
+	ADEBadgeLauncherInstance(HTMLdivID, HTMLobjectID, contentURL, doFulfillmentLink, autoInstall, autoLaunch, badFlashRedirectURL, sendADEInstalled, sendSWFVersion, sendButtonPush);
+}
+
+//-->
+</script>
+
+<body onLoad="doOnLoad();">
+
+<!-- Version reported from the SWF -->
+<div id="swfVersionDiv"></div>
+
+<hr/>
+Adobe Digital Editions Launcher SWF submitting AdeptLink form example <br/><br/>
+<!-- Install or Launch "button" - the SWF -->
+<div id="launcherDivLayer1"></div>
+
+<hr/>
+<p><big><b>ADEPTLink Form Submit Sample</b><br/>
+The data from the AdeptLink Web Request is placed into form to get the Content<br/>
+The form is submitted by the ADE Launcher SWF<br/><br/>
+
+This test generates adeptlink_error.htm page as result (FulfillmentRequest is fake data and RetailerID not real)
+</big></p>
+
+<!-- start the form used as a download link, passing all four hidden fields -->
+<form id="FormAdeptLink" name="FormAdeptLink" method="POST" action="http://adept.overdrive.com/ADEPTLink/OFSGatewayModule.dll/SampleDownload.pdf">
+<input id="RetailerID" name="RetailerID" type="hidden" value="swfcaller"/>
+<input id="FulfillmentRequest" name="FulfillmentRequest" type="hidden" value="&Hash=HASHED+ADEPTLINK+DATA=&Version=1.1"/>
+<input id="ErrorPageURL" name="ErrorPageURL" type="hidden" value=""/>
+<!--  *** SUBMIT CONTROLLED by SWF and JS above ****
+<input id="subadept" name="SUBBUTTON" type="submit" value="Download requested eBook..."/>
+  *** SUBMIT CONTROLLED by SWF and JS above **** -->
+</form>
+  
+
+</body>
+</html>

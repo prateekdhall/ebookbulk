@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/projects/!svn/ver/73510/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/util
+END
+DynamicFieldComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/projects/!svn/ver/73062/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/util/DynamicFieldComparator.java
+END
+EmailUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/projects/!svn/ver/72850/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/util/EmailUtil.java
+END
+SaveObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/projects/!svn/ver/73108/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/util/SaveObject.java
+END
+StringUtility.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/projects/!svn/ver/73380/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/util/StringUtility.java
+END
+ExcelFileUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/projects/!svn/ver/73099/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/util/ExcelFileUtil.java
+END

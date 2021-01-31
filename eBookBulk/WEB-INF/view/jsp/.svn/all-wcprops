@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/projects/!svn/ver/73546/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp
+END
+register.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/projects/!svn/ver/72646/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/register.jsp
+END
+notfound.html
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/projects/!svn/ver/71481/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/notfound.html
+END
+alertrefresh.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/projects/!svn/ver/73630/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/alertrefresh.jsp
+END
+home.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/projects/!svn/ver/72141/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/home.jsp
+END
+changepassword.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/projects/!svn/ver/73215/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/changepassword.jsp
+END
+login.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/projects/!svn/ver/73346/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/login.jsp
+END
+dynamicFields.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/projects/!svn/ver/73901/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/dynamicFields.jsp
+END
+searchAdminUser.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/projects/!svn/ver/73251/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/searchAdminUser.jsp
+END
+user.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/projects/!svn/ver/73251/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/user.jsp
+END
+customerTest.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/projects/!svn/ver/71481/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/customerTest.jsp
+END
+updateUser.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/projects/!svn/ver/73215/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/updateUser.jsp
+END
+createUser.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/projects/!svn/ver/73215/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/createUser.jsp
+END
+myAccount.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/projects/!svn/ver/73251/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/myAccount.jsp
+END
+forgotPassword.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/projects/!svn/ver/73346/Wiley/trunk/Projects/eBookBulk/WEB-INF/view/jsp/forgotPassword.jsp
+END

@@ -1,0 +1,18 @@
+@charset "utf-8";
+/* CSS Document */
+*{margin:0px; padding:0px}body, html{ width:100%; height:100%; font-family: "Myriad Pro", arial; font-size:13px; color:#000; }
+img{ border:0px; color:#FFF;} a{text-decoration:none; display:block;  text-transform:uppercase;} h1{font-size:17px;color:#000;font-weight:bold;margin:0 0 6px 0;padding:0;text-transform:uppercase} #back{width:91px; color:#000 !important; padding:8px 0 6px 31px;font-weight: bold;}p{font-size:12px;line-height:20px;margin-bottom:6px;} .mandatory{color:#F00;}p{font-size:12px;line-height:20px;margin-bottom:6px;} h2{font-size:15px;color:#000;font-weight:bold;margin:0 0 6px 0;padding:0;text-transform:uppercase}
+.wrapper{ width:920px; background-color:#FFF;margin:0px auto; position:relative;}
+#header{background:url('../images/bg_header.gif') repeat-x scroll 0 0 #B1D683; border: 3px solid #C9EE73; height: 115px;margin-bottom: 5px; padding: 3px; 
+    position: absolute; width: 905px;} .logo{position:absolute;margin:8px 10px;left:0px;top: 17px;} .logo h1{ font-size:23px;!important;margin:0 0 6px 0;} .logo-icon{position:absolute;width:150px;left:120px;margin:8px 10px;}
+.register{ background: none repeat scroll 0 0 #FFF; border: 3px solid #C9EE73; min-height:230px; padding: 8px; position: absolute;
+     top: 135px;  width: 225px;height:auto !important;}
+.tradingprice{ background: none repeat scroll 0 0 #FFF; border: 3px solid #C9EE73; min-height: 404px; height:auto !important; padding: 8px; position: absolute; left: 0; top:135px;  width: 645px;}
+#bookCover{border:1px solid #B7DD6A; padding:4px;width:100px;height:155px;float:left;margin:0 15px 10px 0; background-color:#FFF;}
+select{margin-bottom:15px;min-width:225px;font-size:11px; border:1px solid #C9EE73} input[type=text]{margin-bottom:9px;min-width:220px; border:1px solid #C9EE73}#download{ margin-left:1px; color:#000 !important; padding: 8px 0 6px 18px;font-weight: bold;}
+.button{padding:3px 0px;font-size:11px;color:#fff;min-width:65px;border:none;background:#B1D683; background: -moz-linear-gradient(top,  #FFF 0%, #B7DD6A 16%, #C9EE73 29%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF), color-stop(16%,#B7DD6A), color-stop(29%,#C9EE73)); background: -webkit-linear-gradient(top,  #FFF 0%,#B7DD6A 16%,#C9EE73 29%); background: -o-linear-gradient(top,  #87e0fd 0%,#53cbf1 16%,#05abe0 29%); background: -ms-linear-gradient(top,  #FFF 0%,#B7DD6A 16%,#C9EE73 29%); background: linear-gradient(top,  #87e0fd 0%,#53cbf1 16%,#05abe0 29%); margin: 5px 0 1px;}
+.review{background: none repeat scroll 0 0 #FFF;border: 3px solid #C9EE73;min-height: 404px;margin-right: 5px;padding: 8px;position: absolute;top:135px; width: 225px;height:auto !important;left: 672px;}
+.author-info{ background: none repeat scroll 0 0 #FFF; border: 3px solid #C9EE73;min-height: 402px; height:auto !important; left: 253px;margin-bottom: 5px; padding: 8px;  position: absolute; top:135px; width: 641px;}
+.advertisement{position:absolute;top:388px;right:0;width:225px;height:146px;margin:5px 1px;padding:8px;border:2px solid #E7F8BE;background: -webkit-gradient(linear, 0 0, 0 95%, from(#F8FDEA), to(#E7F8BE));background: -moz-linear-gradient(#F8FDEA, #E7F8BE 95%);background: linear-gradient(#F8FDEA, #E7F8BE 95%); left: 0;}	
+#footer{position:absolute;top:568px;width:918px;margin:0 auto;text-align:center;background:url('../images/bg_header.gif') repeat-x scroll 0 0 #B1D683; min-height:36px;vertical-align:middle;height:auto !important;}
+

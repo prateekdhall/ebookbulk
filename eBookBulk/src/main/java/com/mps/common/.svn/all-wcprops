@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/projects/!svn/ver/72895/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common
+END
+AbstractBaseDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/projects/!svn/ver/73850/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common/AbstractBaseDao.java
+END
+GenericComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/projects/!svn/ver/73850/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common/GenericComparator.java
+END
+AppSystem.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/projects/!svn/ver/73826/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common/AppSystem.java
+END
+InitiateApplication.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/projects/!svn/ver/71481/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common/InitiateApplication.java
+END
+BaseDao.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/projects/!svn/ver/73448/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/common/BaseDao.java
+END

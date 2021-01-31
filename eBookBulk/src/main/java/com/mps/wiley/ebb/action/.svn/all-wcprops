@@ -1,0 +1,137 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/projects/!svn/ver/73849/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action
+END
+CustomerProjectActivityReportAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/projects/!svn/ver/73815/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/CustomerProjectActivityReportAction.java
+END
+CustomerAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/projects/!svn/ver/73417/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/CustomerAction.java
+END
+ProjectAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/projects/!svn/ver/73849/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/ProjectAction.java
+END
+CustomerGridAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/projects/!svn/ver/73803/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/CustomerGridAction.java
+END
+MyProjectReportAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/projects/!svn/ver/73817/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/MyProjectReportAction.java
+END
+LoginAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/projects/!svn/ver/73351/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/LoginAction.java
+END
+ChangePasswordAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/projects/!svn/ver/72447/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/ChangePasswordAction.java
+END
+ExceptionMessageGridAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/projects/!svn/ver/73803/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/ExceptionMessageGridAction.java
+END
+UserSearchGridAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/projects/!svn/ver/73803/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/UserSearchGridAction.java
+END
+KeyContactGridAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/projects/!svn/ver/73803/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/KeyContactGridAction.java
+END
+ReportAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/projects/!svn/ver/73848/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/ReportAction.java
+END
+TemplateAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/projects/!svn/ver/73900/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/TemplateAction.java
+END
+CustomerProjectOverviewReportAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/projects/!svn/ver/73816/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/CustomerProjectOverviewReportAction.java
+END
+ProjectGridAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/projects/!svn/ver/73803/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/ProjectGridAction.java
+END
+UserAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/projects/!svn/ver/73417/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/UserAction.java
+END
+ProjectActivityReportAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/projects/!svn/ver/73740/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/ProjectActivityReportAction.java
+END
+ContentFileGridAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/projects/!svn/ver/73803/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/ContentFileGridAction.java
+END
+AutocompleterAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/projects/!svn/ver/72993/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/AutocompleterAction.java
+END
+PromoCodeAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/projects/!svn/ver/73417/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/PromoCodeAction.java
+END
+CommonAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/projects/!svn/ver/73543/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/CommonAction.java
+END
+ProjectUrlAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/projects/!svn/ver/73417/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/ProjectUrlAction.java
+END
+DynamicFieldGridAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/projects/!svn/ver/73888/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/action/DynamicFieldGridAction.java
+END

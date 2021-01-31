@@ -1,0 +1,383 @@
+<!doctype html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <link rel="stylesheet" href="css/style.css" type="text/css"/> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!-- Consider adding an manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/b/378 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Bulk eBook Project</title>
+<meta name="description" content="">
+<meta name="author" content="">
+<!-- Mobile viewport optimized: j.mp/bplateviewport -->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
+<!-- CSS: implied media=all -->
+<!-- CSS concatenated and minified via ant build script-->
+<link rel="stylesheet" href="../css/style.css" type="text/css"/>
+<!-- end CSS-->
+<!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+<!-- All JavaScript at the bottom, except for Modernizr / Respond.
+       Modernizr enables HTML5 elements & feature detects; Respond is a polyfill for min/max-width CSS3 Media Queries
+       For optimal performance, use a custom Modernizr build: www.modernizr.com/download/ -->
+</head>
+
+<script language="javascript" src="ADEBadgeLauncher.js" type="text/javascript"></script>
+
+<script language="javascript">
+<!--
+/*************************************************************
+ *
+ * ADOBE SYSTEMS INCORPORATED
+ * Copyright 2006-2009 Adobe Systems Incorporated
+ * All Rights Reserved
+ *
+ * NOTICE: Adobe permits you to use, modify, and distribute
+ * this file in accordance with the terms of the Adobe license
+ * agreement accompanying it. If you have received this file
+ * from a source other than Adobe, then your use, modification,
+ * or distribution of it requires the prior written permission
+ * of Adobe.
+ *
+ *************************************************************/
+
+// ********************
+//	ade_badge_example.htm
+//
+//  This example shows Launcher Mode for sending content to Adobe Digital Editions
+//  There are examples to send Content in Clear (un-encrypted content) as well as performing GBLink fulfillment links.
+//
+//  See the adeptlink_example to use AdeptLink forms.
+//
+//  When using real Signed GBlink URL from a true server-side implementation, 
+//  please carefully search out the fix_gblink_plus_characters() function and 
+//  comments regarding its usage in server-side to prepare the URL for ADEBadgeLauncherInstance()
+//
+//  Also reference GBLinkExample_ADE_JS.asp for working example to use fix_gblink_plus_characters()
+//
+//  NOTE: This code and the sample code should be used from a web browser for
+//  true test of the environment.  Opening the sample HTML files directly from the
+//  file system may produce un-desirable results due to the flash security model
+//  To ensure good test results, place the sample code all in a single folder then expose
+//  that folder as a virtual directory from your favorite web server.
+// ********************
+
+//-----------------------------------------------------------------------------
+//  Maintenance Log:
+//  04/17/2008	the (3) buttonLabel params were removed
+//				buttonLabelNotRequirements, buttonLabelNot, buttonLabelInst
+//  04/03/2008	1.5	Adjust buttonLabel settings to use internal defaults in some cases
+//  04/01/2008	1.4	Move fix_gblink_plus_characters off to ADEBadgeLauncher.js
+//					Add unencrypted PDF example. Commenting updates
+//  03/05/2008	1.3	Removed launcherDivLayer5
+//  01/23/2008	1.2	update to use sendSWFVersion and sendButtonPush
+//					add stubs ShowSWFVersion_DivLayer(), ADE_SWF_ButtonPush_action()
+//-----------------------------------------------------------------------------
+
+// ********************
+// Stub function provided to support operation
+// independent of DigitalEditionsDetection.js
+// ********************
+function ShowADE_DivLayer()
+{
+	// This example does not use DigitalEditionsDetection.js
+	// Therefore this stub is needed
+	return;
+}
+
+// ********************
+// Stub function provided to support operation for SWF Version
+// This is called when sendSWFVersion = "true"
+// and the script at setG_strSWFVersion() detects a fresh string
+// ********************
+function ShowSWFVersion_DivLayer()
+{
+	// We dont have a DIV for the version, so we do nothing here
+	return;
+}
+
+// ********************
+// Stub function provided to support send_ADE_SWF_ButtonPush()
+// That anchor function will call the stub
+// This way, the anchor function is always defined, and various
+// implementations can provide the stub where needed
+// ********************
+function ADE_SWF_ButtonPush_action()
+{
+	// Copy and enable this function into your
+	// implementations where sendButtonPush = "true"
+	
+	//  NOTE: When sendButtonPush = "true", then even if contentURL is set, it will not
+	//  be sent to ADE after it is launched.  When sendButtonPush = "true", all that happens
+	//  after ADE is launched is that the JS Callback is made, and that is it.
+	
+	// We dont do this, but stub is provided anyway
+	return;
+}
+
+
+function doOnLoad()
+{
+	// Please reference ADEBadgeLauncher.js for full documentation
+	
+	//  HTML Section params:
+	//  =========================
+	// HTMLdivID - id of the <div> which will hold the SWF
+	// HTMLobjectID - desired ID for the HTML <object> that contains the SWF (may be null - default is ADEBadgeLauncherInstance)
+	
+	//  Flash SWF parameters:
+	//  =========================
+	//	contentURL - (string) 
+	//  URL to the PDF or ePub content which DE will download, 
+	//  or DRM fulfillment URL (see doFulfillmentLink)
+	//  The URL must be escaped (js escape() function) to retain its integrity
+	//
+	//  ------------------------------
+	//  doFulfillmentLink - (true, false)
+	//  true - submit "contentURL" parameter into browser (for DRM fulfillment URL)
+	//  false - pass "contentURL" through LocalConnection into DE. DE will download the 
+	//  content and open
+	
+	
+	// *******************************
+	// FOR launcherDivLayer1
+	// *******************************
+	
+	//  HTML Section params:
+	//  =========================
+	var HTMLdivID = "launcherDivLayer1"; 
+	var HTMLobjectID = "ADEBadgeLauncherInstance1";
+	
+	//  Flash SWF parameters:
+	//  =========================
+	var contentURL = "http://ebookfulfill.adobe.com/fulfill/ebx.etd?action=free&ordersource=adbestor&bookid=ISBN:1930161069";
+	var autoInstall = false; 
+	var autoLaunch = false;
+	var badFlashRedirectURL	= null; // "http://my.domain.com/flashhelp";  // null; // can be null
+	
+	var doFulfillmentLink = true;	// NEEDED for ACS fulfillment
+	var sendADEInstalled = false;
+	var sendSWFVersion = false;
+	var sendButtonPush = false;  // if true, only call the JS function - contentURL would be ignored if used
+	
+	// must ESCAPE the URL
+	var escapedContentURL = escape(contentURL);
+	
+	// NOTE: For including a GBLink URL here, there are other special considerations
+	// NOTE: This is for a server-side implementation where the server is serving out these pages.
+	// Like Microsoft IIS server running asp server-side javascript, or any other server environment
+	//
+	// PLEASE SEE detailed comment at the fix_gblink_plus_characters() function
+	//
+	// This variable would be declared outside this client-side script block in the server scope
+	// var server_side_GBLinkURL;   // assign GBLink URL into this somewhere in server code
+	//
+	// This line would plop the server_side_GBLinkURL as text into the client javascript
+	// var escapedContentURL = escape("<%=server_side_GBLinkURL%>");
+	//
+	// This line will fix the + into %2B for proper operation
+	// escapedContentURL = fix_gblink_plus_characters(escapedContentURL);
+	
+	ADEBadgeLauncherInstance(HTMLdivID, HTMLobjectID, escapedContentURL, doFulfillmentLink, autoInstall, autoLaunch, badFlashRedirectURL, sendADEInstalled, sendSWFVersion, sendButtonPush);
+	
+	// *******************************
+	// FOR launcherDivLayer2
+	// *******************************
+	
+	//  HTML Section params:
+	//  =========================
+	HTMLdivID = "launcherDivLayer2"; 
+	HTMLobjectID = "ADEBadgeLauncherInstance2";
+	
+	//  Flash SWF parameters:
+	//  =========================
+	contentURL = "http://divpi.adobe.com/content/DeathAndTheSenator.epub";
+	doFulfillmentLink = false;	// NOT SET for unencrypted ePub or PDF Download
+	
+	// must ESCAPE the URL
+	escapedContentURL = escape(contentURL);
+	
+	// REMINDER: Server-side GBLink URL need this as well
+	// escapedContentURL = fix_gblink_plus_characters(escapedContentURL);
+
+	ADEBadgeLauncherInstance(HTMLdivID, HTMLobjectID, escapedContentURL, doFulfillmentLink, autoInstall, autoLaunch, badFlashRedirectURL, sendADEInstalled, sendSWFVersion, sendButtonPush);
+	
+	// *******************************
+	// THIS SECTION SHOWING THE USE OF THE DEFAULTS
+	// *******************************
+	
+	// change some of them up to illustrate difference
+	// NOT REALLY here since we removed buttonLabel
+	
+	SetADEBadgeLauncherDefaults(autoInstall, autoLaunch, badFlashRedirectURL, sendADEInstalled)
+	
+	// *******************************
+	// FOR launcherDivLayer3
+	// *******************************
+	
+	//  HTML Section params:
+	//  =========================
+	HTMLdivID = "launcherDivLayer3"; 
+	HTMLobjectID = "ADEBadgeLauncherInstance3";
+	
+	//  Flash SWF parameters:
+	//  =========================
+	contentURL = "http://ebookfulfill.adobe.com/fulfill/ebx.etd?action=free&ordersource=adbestor&bookid=ISBN:1930161069";
+	doFulfillmentLink = true;	// Needed for ACS Fulfill
+	
+	// must ESCAPE the URL
+	escapedContentURL = escape(contentURL);
+
+	// REMINDER: Server-side GBLink URL need this as well
+	// escapedContentURL = fix_gblink_plus_characters(escapedContentURL);
+
+	ADEBadgeLauncherInstanceWithDefs(HTMLdivID, HTMLobjectID, escapedContentURL, doFulfillmentLink)
+
+	// *******************************
+	// FOR launcherDivLayer4
+	// *******************************
+	
+	//  HTML Section params:
+	//  =========================
+	HTMLdivID = "launcherDivLayer4"; 
+	HTMLobjectID = "ADEBadgeLauncherInstance4";
+	
+	//  Flash SWF parameters:
+	//  =========================
+	contentURL = "http://divpi.adobe.com/content/DeathAndTheSenator.epub";
+	doFulfillmentLink = false;	// NOT SET for unencrypted ePub or PDF Download
+	
+	// must ESCAPE the URL
+	escapedContentURL = escape(contentURL);
+
+	// REMINDER: Server-side GBLink URL need this as well
+	// escapedContentURL = fix_gblink_plus_characters(escapedContentURL);
+	
+	ADEBadgeLauncherInstanceWithDefs(HTMLdivID, HTMLobjectID, escapedContentURL, doFulfillmentLink)
+	
+	// *******************************
+	// FOR launcherDivLayer5
+	// *******************************
+	
+	//  HTML Section params:
+	//  =========================
+	HTMLdivID = "launcherDivLayer5"; 
+	HTMLobjectID = "ADEBadgeLauncherInstance5";
+	
+	//  Flash SWF parameters:
+	//  =========================
+	contentURL = "http://divpi.adobe.com/content/Dracula.pdf";
+	doFulfillmentLink = false;	// NOT SET for unencrypted ePub or PDF Download
+	
+	// must ESCAPE the URL
+	escapedContentURL = escape(contentURL);
+	
+	// REMINDER: Server-side GBLink URL need this as well
+	// escapedContentURL = fix_gblink_plus_characters(escapedContentURL);
+
+	ADEBadgeLauncherInstance(HTMLdivID, HTMLobjectID, escapedContentURL, doFulfillmentLink, autoInstall, autoLaunch, badFlashRedirectURL, sendADEInstalled, sendSWFVersion, sendButtonPush);
+}
+
+//-->
+</script>
+
+<body onLoad="doOnLoad();">
+
+<div id="container">
+ <header>
+  <!--Top Navigation starts here-->
+  <div id="topnav">
+   <ul>
+    <li>Welcome Jim Santello</li>
+    <li class="pipe">|</li>
+    <li><a href="#">My Account</a></li>
+    <li class="pipe">|</li>
+    <li><a href="#">Contact Us</a></li>
+    <li class="pipe">|</li>
+    <li><a href="#">Help</a></li>
+    <li class="pipe">|</li>
+    <li><a href="login.html">Logout</a></li>
+   </ul>
+  </div>
+  <!--Top Navigation starts here-->
+  <!--Application Navigation-->
+  <div id="application-bar">
+   <div class="pubLogo"><img src="img/wiley-logo.png" alt="Wiley"/></div>
+   <div class="tabbedNavigation">
+    <ul class="tabs">
+     <li><a href="index.html">Home</a></li>
+    </ul>
+   </div>
+  </div>
+  <!--Application Navigation-->
+ </header>
+ <div class="content-wrapper">
+  <div id="main" role="main">
+   <h1 class="pagehead">Download eBook</h1>   
+   <div class="back-button">
+    <input type="button" class="submit_btn" value="Back" onClick="history.go(-1)">
+   </div>
+   <div class="medium-spacer"></div>
+   <div class="ADEInstallerBox">
+   <hr/>
+<img src="http://ebookfulfill.adobe.com/thumbnails/ISBN_1930161069_Thumbnail.gif" width="100" height="150" alt="ISBN_1930161069_Thumbnail.gif">
+<br/>
+Adobe Content Server download with GBLink URL (actually static action=free URL) <br/><br/>
+Memoirs of Sherlock Holmes<br/>
+<!-- Download "button" - the SWF -->
+<div id="launcherDivLayer1"></div>
+
+<hr/>
+<img src="http://ebookfulfill.adobe.com/thumbnails/epub/DeathAndTheSenator_coverpg.jpg" width="100" height="150" alt="ISBN_1930161069_Thumbnail.gif">
+<br/>
+XHTML (ePub) un-encrypted download <br/><br/>
+Death and the Senator<br/>
+<!-- Download "button" - the SWF -->
+<div id="launcherDivLayer2"></div>
+
+<!-- DUPLICATE SELECTIONS but using the DEFAULT functions, above -->
+
+<hr/>
+<img src="http://ebookfulfill.adobe.com/thumbnails/ISBN_1930161069_Thumbnail.gif" width="100" height="150" alt="ISBN_1930161069_Thumbnail.gif">
+<br/>
+Adobe Content Server download with GBLink URL (actually static action=free URL) <br/><br/>
+Memoirs of Sherlock Holmes<br/>
+Code Sample using the Defaults methods<br/>
+<!-- Download "button" - the SWF -->
+<div id="launcherDivLayer3"></div>
+
+<hr/>
+<img src="http://ebookfulfill.adobe.com/thumbnails/epub/DeathAndTheSenator_coverpg.jpg" width="100" height="150" alt="ISBN_1930161069_Thumbnail.gif">
+<br/>
+XHTML (ePub) un-encrypted download <br/><br/>
+Death and the Senator<br/>
+Code Sample using the Defaults methods<br/>
+<!-- Download "button" - the SWF -->
+<div id="launcherDivLayer4"></div>
+
+<hr/>
+<img src="http://ebookfulfill.adobe.com/thumbnails/ISBN_193016100X_Thumbnail.gif" width="100" height="150" alt="ISBN_1930161069_Thumbnail.gif">
+<br/>
+PDF un-encrypted download <br/><br/>
+Dracula<br/>
+<!-- Download "button" - the SWF -->
+<div id="launcherDivLayer5"></div>
+   </div> 
+  </div>
+  <div class="clear"></div>
+ </div>
+ <!--Main-->
+ <footer>
+  <p>Copyright  2006-2009 MPS Technologies Ltd</p>
+ </footer>
+</div>
+<!--Content Wrapper-->
+</div>
+</div>
+
+</body>
+</html>

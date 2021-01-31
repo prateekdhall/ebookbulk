@@ -1,0 +1,57 @@
+<p>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script><!--[if gte IE 9]>  <style type="text/css">    .gradient {       filter: none;    }  </style><![endif]--></p>
+<div id="template01" style="width:920px;position:relative;height:625px;margin:0 auto;">
+	<div id="header" style="position:absolute;width:910px;border:2px solid #74A2DB;padding:3px;height:115px;margin-bottom:5px;">
+		<div id="col-1" style="position:absolute;width:58px;left:0;margin:8px 10px;">
+			<img src="https://encrypted-tbn1.google.com/images?q=tbn:ANd9GcSQuAzpPjMT-VcmiiND7rucqA9vVQbZOU1ROz7hn0N6xjqhVAY0" style="top: 0px; left: 0px; width: 89px; height: 90px;" /></div>
+		<div id="col-2" style="position:absolute;width:45px;left:68px; margin:8px 10px;">
+			<img alt="" src="img/publisherlogo.jpg" /></div>
+		<div id="col-3" style="position:absolute;width:47px;left:147px; margin:8px 10px;">
+			<img src="https://encrypted-tbn1.google.com/images?q=tbn:ANd9GcSQuAzpPjMT-VcmiiND7rucqA9vVQbZOU1ROz7hn0N6xjqhVAY0" style="top: 0px; left: 0px; width: 89px; height: 90px;" /></div>
+		<div id="col-4" style="position:absolute;margin:8px 10px;left:228px;">
+			<h1 style="font-size:23px; color:#006a87;margin:0 0 6px 0;padding:0;">
+				Website Title</h1>
+			<p id="desc" style="font-size:13px; color:#006a87; font-style:italic;">
+				Website sub-title</p>
+		</div>
+	</div>
+	<div id="row1" style="position:absolute;top:135px;padding:8px;background:#fff;border:2px solid #74A2DB;width:662px;height:214px;margin-right:5px;">
+		<h2 style="font-size:15px;font-weight:bold;margin:0 0 6px 0;padding:0;">
+			Text Box Header - 1</h2>
+		<p style="font-size:12px;line-height:16px;margin-bottom:8px;">
+			Text Box Text - 1<br />
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+	</div>
+	<div id="row2" style="position:absolute; top:135px; right:0px; background:#fff; border:2px solid #74A2DB; width:225px;height:230px;">
+	<iframe src="new.html"></iframe>
+	<!--#include file="/new.html" -->
+	<!-- <img src="img/Bookimage.jpg" style="padding:5px 0px 0px 25px" /><br />
+		<input id="download" style="margin:2px 0 0 62px; padding:3px 0px;font-size:11px;color:#fff;min-width:65px;background:none;border:none; border-radius:4px; border:2px solid #4884CE;/* Old browsers *//* IE9 SVG, needs conditional override of 'filter' to 'none' */background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2QzZGVlYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQxJSIgc3RvcC1jb2xvcj0iI2M0ZDNlNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQ2JSIgc3RvcC1jb2xvcj0iIzhlYWJjZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiMGM3ZTMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);background: -moz-linear-gradient(top,  #d3deeb 0%, #c4d3e4 41%, #8eabcd 46%, #b0c7e3 100%); /* FF3.6+ */background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d3deeb), color-stop(41%,#c4d3e4), color-stop(46%,#8eabcd), color-stop(100%,#b0c7e3)); /* Chrome,Safari4+ */background: -webkit-linear-gradient(top,  #d3deeb 0%,#c4d3e4 41%,#8eabcd 46%,#b0c7e3 100%); /* Chrome10+,Safari5.1+ */background: -o-linear-gradient(top,  #d3deeb 0%,#c4d3e4 41%,#8eabcd 46%,#b0c7e3 100%); /* Opera 11.10+ */background: -ms-linear-gradient(top,  #d3deeb 0%,#c4d3e4 41%,#8eabcd 46%,#b0c7e3 100%); /* IE10+ */background: linear-gradient(top,  #d3deeb 0%,#c4d3e4 41%,#8eabcd 46%,#b0c7e3 100%); /* W3C */filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d3deeb', endColorstr='#b0c7e3',GradientType=0 ); /* IE6-8 */" type="submit" value="Download" /> 
+		-->
+		</div>
+	<div id="row3" style="position:absolute;top:380px;padding:8px;background:#fff;border:2px solid #74A2DB;width:730px;height:80px;">
+		<h2 style="font-size:15px;font-weight:bold;margin:0 0 6px 0;padding:0;">
+			Text Box Header - 2</h2>
+		<p style="font-size:12px;line-height:16px;margin-bottom:8px;">
+			Text Box Text - 1<br />
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+	</div>
+	<div id="col4" style="position:absolute;top:490px;padding:8px;background:#fff;border:2px solid #74A2DB;width:730px;height:80px;">
+		<h2 style="font-size:15px;font-weight:bold;margin:0 0 6px 0;padding:0;">
+			Text Box Header - 3</h2>
+		<p style="font-size:12px;line-height:16px;margin-bottom:8px;">
+			Text Box Text - 1<br />
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+	</div>
+	<div id="row5" style="position:absolute;top:375px;right:0;width:140px;height:189px;margin:5px 1px;padding:8px;border:2px solid #74A2DB;">
+		<img alt="Advertisement" height="187" src="img/otherimg.jpg" width="140" /></div>
+	<div style="clear:both">
+		&nbsp;</div>
+	<div id="footer" style="position:absolute;top:600px;width:915px;margin:0 auto;text-align:center;border:2px solid #74A2DB;height:40px;vertical-align:middle;">
+		<p style="text-align:center; font-size:11px; color:#666; margin-top: 15px;">
+			&copy; All Rights Reserved.</p>
+	</div>
+</div>
+<p>
+	&nbsp;</p>

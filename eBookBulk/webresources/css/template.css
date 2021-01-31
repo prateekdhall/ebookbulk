@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* Core CSS */
+#template {
+	margin: auto;
+	width: 1000px;
+
+/* Three Column */ 
+display: 
+"aaa" /150px "bcd" "eee" * 500px *;
+}
+#a {
+	position: a;
+}
+#b {
+	position: b;
+}
+#c {
+	position: c;
+}
+#d {
+	position: d;
+}
+#e {
+	position: e;
+}
+ #template::slot(a) {
+background: #eee;
+}
+#template::slot(b) {
+background: #ddd;
+}
+#template::slot(c) {
+background: #ccc;
+}
+#template::slot(d) {
+background: #bbb;
+}
+#template::slot(e) {
+background: #aaa;
+}

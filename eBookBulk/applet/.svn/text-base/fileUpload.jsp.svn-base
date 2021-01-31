@@ -1,0 +1,39 @@
+<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+
+<script>
+function afterUploadMsg(){
+	$.facebox.close(); 
+}
+</script>
+
+
+<div id="appletUpload">
+<!-- --------------------------------------------------------------------------------------------------- -->
+<!-- --------     A DUMMY APPLET, THAT ALLOWS THE NAVIGATOR TO CHECK THAT JAVA IS INSTALLED   ---------- -->
+<!-- --------               If no Java: Java installation is prompted to the user.            ---------- -->
+<!-- --------                                                                                 ---------- -->
+<!-- --------               THIS IS NOT THE JUpload APPLET TAG !   See below                  ---------- -->
+<!-- --------------------------------------------------------------------------------------------------- -->
+<!--"CONVERTED_APPLET"-->
+<!-- HTML CONVERTER -->
+ 
+<applet
+                code="wjhk.jupload2.JUploadApplet"
+                name="JUploadApplet"
+                archive="<%=request.getContextPath()%>/applet/wileyapplet.jar,<%=request.getContextPath()%>/applet/jakarta-oro-2.0.8.jar,<%=request.getContextPath()%>/applet/commons-net-1.4.1.jar,<%=request.getContextPath()%>/applet/commons-fileupload-1.2.2.jar,<%=request.getContextPath()%>/applet/commons-codec.jar,<%=request.getContextPath()%>/applet/commons-httpclient.jar,<%=request.getContextPath()%>/applet/commons-logging.jar"
+                width="640"
+                height="300"
+                mayscript
+                alt="The java pugin must be installed.">
+             <param name="securePostURL" value='<%=request.getAttribute("fileUploadPath")%>' />   
+             <param name="secureAfterFileUploadURL" value='<%=request.getAttribute("afterUploadFileUrlForApplet")%>' />
+             <param name="afterUploadURL" value='<%=request.getAttribute("afterUploadUrlForApplet")%>' />
+             <param name="customParameterOne" value='<%=request.getAttribute("fileType")%>'  />
+             <param name="customParameterTwo" value='<%=request.getAttribute("isbn")%>' />
+             <param name="customParameterThree" value='<%=request.getAttribute("contentId")%>' />
+             <param name="showLogWindow" value="false" />
+</applet>
+ </div>
+
+
+

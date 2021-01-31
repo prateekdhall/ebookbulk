@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/projects/!svn/ver/73397/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/jobs
+END
+ActiveToInactive.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/projects/!svn/ver/73362/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/jobs/ActiveToInactive.java
+END
+PendingToActive.java
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/projects/!svn/ver/73362/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/jobs/PendingToActive.java
+END
+ProjectCronService.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/projects/!svn/ver/73397/Wiley/trunk/Projects/eBookBulk/src/main/java/com/mps/wiley/ebb/jobs/ProjectCronService.java
+END

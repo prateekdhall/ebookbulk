@@ -1,0 +1,159 @@
+<project name="eBookBulk" basedir="." default="start">
+	<!-- =========== target: env  ============= -->
+	
+	<target name="env" description="All the env variables are set here.">
+		<!-- The .jar name of the application & version -->
+		<property name="app.jar.name" value="eBookBulk" />
+
+		<!-- The base dir property -->
+		<property name="base.dir" value="${basedir}" />
+
+		<!-- The properties file -->
+		<property file="${base.dir}/build.properties" />
+
+		<!-- The source dir property -->
+		<property name="web.inf.name" value="WEB-INF" />
+		<property name="web.inf.dir" value="${basedir}/${web.inf.name}" />
+		<property name="src.dir" value="${basedir}/src" />
+		<property name="web.inf.lib.dir" value="${web.inf.dir}/lib" />
+
+		<!-- The distribution property -->
+		<property name="dist.dir.name" value="${dist.dir}" />
+		<!-- This Property will be read from build.properties file. -->
+		<echo message="Dist. dir Name: ${dist.dir.name}" />
+
+		<property name="context.name" value="${context.name}" />
+		<!-- This Property will be read from build.properties file. -->
+		<echo message="Dist. App Name: ${context.name}" />
+
+		<property name="dist.web.inf.dir" value="${dist.dir.name}/${context.name}/${web.inf.name}" />
+		<echo message="Dist. WEB-INF : ${dist.web.inf.dir}" />
+
+		<property name="dist.web.inf.classes.dir" value="${dist.web.inf.dir}/classes" />
+		<echo message="Dist. WEB-INF/classes : ${dist.web.inf.classes.dir}" />
+
+		<property name="dist.web.inf.lib.dir" value="${dist.web.inf.dir}/lib" />
+		<echo message="Dist. WEB-INF/lib : ${dist.web.inf.lib.dir}" />
+
+		<property name="dist.javadoc.dir" value="${dist.dir}/${context.name}/javadoc" />
+		<echo message="Dist. javadoc : ${dist.javadoc.dir}" />
+
+		<!-- The title for doc. -->
+		<property name="doc.title" value="eBookBulk" />
+
+		<!-- Pattern for excluding testing folder -->
+		<patternset id="exclude.files">
+			<exclude name="**/testing/**" />
+			<!-- Comment the Below Line if Want the Web Admin Folder -->
+		</patternset>
+
+	</target>
+
+	<!-- ============= target: checkdistpath =============== -->
+	<target name="checkdistpath" depends="env" description="This makes sure that source path and distribution path are not same. If so then stops and prompts error.">
+		<condition property="SamePath">
+			<equals casesensitive="false" trim="true" arg1="${dist.dir.name}\${context.name}" arg2="${base.dir}" />
+		</condition>
+	</target>
+
+
+	<!-- ================ target: check-cond  ================== -->
+	<target name="check-cond" depends="checkdistpath" if="SamePath">
+		<fail message="Distribution dir and Source dir are same. Change the value of 'dist.dir' in the 'build.properties' file. " />
+	</target>
+
+	<!-- ============== target: checkdistexist ================ -->
+	<target name="checkdistexist" depends="check-cond" description="This task deletes the existing path if already exists.">
+		<delete includeEmptyDirs="true" failonerror="off">
+			<fileset dir="${dist.dir.name}/${context.name}" />
+		</delete>
+	</target>
+
+	<!-- ============== target: makedistdir =============== -->
+	<target name="makedistdir" description="This target creates dist. and other directories. ">
+		<mkdir dir="${dist.web.inf.classes.dir}" />
+		<mkdir dir="${dist.web.inf.lib.dir}" />
+	</target>
+
+	<!-- =============== target: compile ============ -->
+	<target name="compile" depends="env, makedistdir" description="This target compiles the java file. from the src folder">
+		<!--setting classpath-->
+		<path id="classpath">
+			<fileset dir="${web.inf.lib.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</path>
+
+		<javac srcdir="${src.dir}" destdir="${dist.web.inf.classes.dir}" classpathref="classpath" debug="true" fork="true" source="1.6"  target="1.6"
+                      memoryinitialsize="128M" memorymaximumsize="256M">
+     	<patternset refid="exclude.files" />
+		<classpath refid="classpath"/>
+		</javac>
+	</target>
+
+	<!-- ============= target: makejar ===================== 
+	<target name="makejar" depends="compile" description="This target creates the jar file.">
+		<jar basedir="${dist.web.inf.classes.dir}" destfile="${dist.web.inf.lib.dir}/${app.jar.name}.jar">
+			<manifest>
+				<section name="${app.jar.name}">
+					<attribute name="App-Name" value="eBookBulk" />
+					<attribute name="App-Ver" value="1.0" />
+					<attribute name="Company" value="MPS Technologies Inc." />
+				</section>
+			</manifest>
+		</jar>
+	</target>
+-->
+	<!-- ================================= 
+          target: copyappmisc              
+          ================================= -->
+	<target name="copyappmisc" depends="compile" description="This target copies all the misc. files and folder from outside the WEB-INF folder.">
+		<copy todir="${dist.dir.name}/${context.name}">
+			<fileset dir="${base.dir}">
+				<include name="webresources/**/*" />
+				<!-- <include name="vm/**/*" /> -->
+				<include name="index.jsp" />
+				<include name="favicon.ico" />
+				<patternset refid="exclude.files" />
+			</fileset>
+		</copy>
+		<!-- copying miscllenous folders from web-inf to distribution folder -->
+		<copy todir="${dist.web.inf.dir}">
+			<fileset dir="${web.inf.dir}">
+				<include name="classes/**/*.properties" />
+				<include name="classes/**/*.class" />
+                <include name="view/**/*.jsp" />
+				<include name="classes/**/*.vm" />
+				<include name="classes/**/*.xml" />
+				<include name="config/**/*.xml" />
+				<include name="lib/*" />
+				<include name="web.xml" />
+				<patternset refid="exclude.files" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- ============ target: cleanup  ============== -->
+	<!--	<target name="cleanup" depends="copyappmisc" description="This target deletes the dist/classes folder and it's contents.">
+
+		<delete includeEmptyDirs="true" failonerror="false">
+			<fileset dir="${dist.web.inf.dir}/classes">
+				<exclude name="**/*.properties" />
+			</fileset>
+		</delete>
+		
+			<delete includeEmptyDirs="true">
+				<fileset dir="${dist.web.inf.dir}/src" />
+			</delete>
+			
+	</target>
+-->
+	<!-- ================ target: makewar ================ -->
+	<target name="makewar" description="This creates the .war file of the application.">
+		<war destfile="${dist.dir}/${context.name}.war" webxml="${dist.web.inf.dir}/web.xml">
+			<fileset dir="${dist.dir}/${context.name}" excludes="**/web.xml" />
+		</war>
+	</target>
+
+	<target name="start" depends="env,checkdistpath,check-cond,checkdistexist,makedistdir,compile,copyappmisc,makewar" description="This is the start task target" />
+</project>
